@@ -1,9 +1,10 @@
 import Shortener from '../components/Shortener';
 import useShortener from '../hooks/useShortener';
 import Result from '../components/Result';
+import Dashboard from './Dashboard';
 
 function Root() {
-    const { url, handleUrlChange, shortenedUrl, shortenUrl, convertAnother, resultIsShown } = useShortener();
+    const { url, handleUrlChange, shortenedUrl, shortenUrl, convertAnother, resultIsShown, dashboardIsShown, toggleShowDashboard } = useShortener();
     return (
         <>
             <div className='mb-2 text-center'>
@@ -12,10 +13,15 @@ function Root() {
             </div>
             <div className='bg-base-200 p-3 rounded'>
                 {
-                    resultIsShown ?
-                        <Result url={url} shortenedUrl={shortenedUrl} convertAnother={convertAnother} /> :
-                        <Shortener url={url} handleUrlChange={handleUrlChange} shortenUrl={shortenUrl} />
+                    dashboardIsShown ?
+                        <Dashboard /> :
+                        resultIsShown ?
+                            <Result url={url} shortenedUrl={shortenedUrl} convertAnother={convertAnother} /> :
+                            <Shortener url={url} handleUrlChange={handleUrlChange} shortenUrl={shortenUrl} />
                 }
+                <div className='text-center p-3'>
+                    <button className='link hover:text-primary' onClick={toggleShowDashboard}>{dashboardIsShown ? 'Back to home' : 'Manage your URL\'s'}</button>
+                </div>
             </div>
         </>
     );

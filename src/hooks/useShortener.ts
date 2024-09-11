@@ -34,9 +34,8 @@ export default function useShortener() {
   const urlSuffix = 'http://localhost:5173/csus/';
   const [url, setUrl] = useState<string>('');
   const [shortenedUrl, setShortenedUrl] = useState<string>('');
-  const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>(
-    []
-  );
+  const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
+  const [dashboardIsShown, setDashboardIsShown] = useState(false);
   const [resultIsShown, setResultIsShown] = useState(false);
 
   /**
@@ -68,10 +67,13 @@ export default function useShortener() {
     setResultIsShown(false);
   };
 
+  const toggleShowDashboard = () => {
+    setDashboardIsShown((prev) => !prev);
+  };
+
   useEffect(() => {
-    localforage.getItem(forageKey).then(result => {
+    localforage.getItem(forageKey).then((result) => {
       setIndexedUrls(result as UrlObject[]);
-      console.log(result);
     });
   }, []);
 
@@ -82,5 +84,7 @@ export default function useShortener() {
     shortenUrl,
     resultIsShown,
     convertAnother,
+    dashboardIsShown,
+    toggleShowDashboard
   };
 }
