@@ -15,13 +15,13 @@ function Result(props: Props) {
                 <div className="label">
                     <span className="label-text text-xl"> <FontAwesomeIcon icon={faLink} /> Long URL:</span>
                 </div>
-                <input type="text" value={props.url} className="input input-bordered" />
+                <input type="text" value={props.url} className="input input-bordered" readOnly />
             </label>
             <label className="form-control">
                 <div className="label">
                     <span className="label-text text-xl"> <FontAwesomeIcon icon={faStar} /> Short URL:</span>
                 </div>
-                <input type="text" value={props.shortenedUrl} className="input input-bordered" />
+                <input type="text" value={props.shortenedUrl} className="input input-bordered" readOnly />
             </label>
             <div className='flex gap-3 mt-3 justify-center'>
                 <a href={props.shortenedUrl} target='_blank' className='btn btn-primary btn-outline'><FontAwesomeIcon icon={faArrowUpRightFromSquare} />Visit</a>
