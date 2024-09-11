@@ -4,7 +4,7 @@ import Result from '../components/Result';
 import Dashboard from './Dashboard';
 
 function Root() {
-    const { url, handleUrlChange, shortenedUrl, shortenUrl, convertAnother, resultIsShown, dashboardIsShown, toggleShowDashboard } = useShortener();
+    const { url, indexedUrls, handleUrlChange, shortenedUrl, shortenUrl, convertAnother, resultIsShown, dashboardIsShown, toggleShowDashboard } = useShortener();
     return (
         <>
             <div className='mb-2 text-center'>
@@ -14,7 +14,7 @@ function Root() {
             <div className='bg-base-200 p-3 rounded'>
                 {
                     dashboardIsShown ?
-                        <Dashboard /> :
+                        <Dashboard indexedUrls={indexedUrls}/> :
                         resultIsShown ?
                             <Result url={url} shortenedUrl={shortenedUrl} convertAnother={convertAnother} /> :
                             <Shortener url={url} handleUrlChange={handleUrlChange} shortenUrl={shortenUrl} />

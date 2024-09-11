@@ -79,6 +79,7 @@ export default function useShortener() {
 
   return {
     url,
+    indexedUrls,
     handleUrlChange,
     shortenedUrl,
     shortenUrl,
