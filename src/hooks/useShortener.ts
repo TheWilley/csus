@@ -1,6 +1,7 @@
 import localforage from 'localforage';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { findInForage, forageKey } from '../utils/urlUtils';
+import { UrlObject } from '../global/types';
 
 /**
  * Generates a random ID based on the current date.
@@ -33,7 +34,7 @@ export default function useShortener() {
   const urlSuffix = 'http://localhost:5173/csus/';
   const [url, setUrl] = useState<string>('');
   const [shortenedUrl, setShortenedUrl] = useState<string>('');
-  const [indexedUrls, setIndexedUrls] = useState<{ url: string; shortenedUrl: string }[]>(
+  const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>(
     []
   );
   const [resultIsShown, setResultIsShown] = useState(false);
@@ -45,13 +46,14 @@ export default function useShortener() {
     if (isValidUrl(url)) {
       findInForage(url, 'url', (result) => {
         if (!result) {
-          const adjustedArray = [...indexedUrls, { url: url, shortenedUrl: uid() }];
+          const uniqueId = uid();
+          const adjustedArray = [...indexedUrls, { url: url, shortenedUrl: uniqueId }];
           localforage.setItem(forageKey, adjustedArray).then(() => {
-            setShortenedUrl(urlSuffix + uid());
+            setShortenedUrl(urlSuffix + uniqueId);
             setIndexedUrls(adjustedArray);
           });
         } else {
-          setShortenedUrl(result.shortenedUrl);
+          setShortenedUrl(urlSuffix + result.shortenedUrl);
         }
         setResultIsShown(true);
       });
@@ -65,6 +67,13 @@ export default function useShortener() {
   const convertAnother = () => {
     setResultIsShown(false);
   };
+
+  useEffect(() => {
+    localforage.getItem(forageKey).then(result => {
+      setIndexedUrls(result as UrlObject[]);
+      console.log(result);
+    });
+  }, []);
 
   return {
     url,
