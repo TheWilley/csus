@@ -11,19 +11,18 @@ function Dashboard(props: Props) {
                 {/* head */}
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Long URL</th>
                         <th>Short URL ID</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        props.indexedUrls.map((item, index) => (
+                        props.indexedUrls.map((item) => (
                             <tr>
-                                <th>{index}</th>
                                 <td>{item.url}</td>
                                 <td>{item.shortenedUrl}</td>
                                 <td><button className='link hover:text-error'>Delete</button></td>
+                                <td><button className='link hover:text-error'>Edit</button></td>
                             </tr>
                         ))
                     }
