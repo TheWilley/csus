@@ -1,6 +1,6 @@
 import localforage from 'localforage';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { findInForage, forageKey } from '../utils/urlUtils';
+import { findInForage } from '../utils/urlUtils';
 import { UrlObject } from '../global/types';
 
 /**
@@ -66,7 +66,7 @@ export default function useShortener() {
         if (!result) {
           const uid = generateUniqueId();
           const adjustedArray = [...indexedUrls, { url: url, uid }];
-          localforage.setItem(forageKey, adjustedArray).then(() => {
+          localforage.setItem(import.meta.env.BASE_URL, adjustedArray).then(() => {
             setShortenedUrl(urlSuffix + uid);
             setIndexedUrls(adjustedArray);
           });
@@ -103,7 +103,7 @@ export default function useShortener() {
 
   // Initially syncs indexedUrls with LocalForage
   useEffect(() => {
-    localforage.getItem(forageKey).then((result) => {
+    localforage.getItem(import.meta.env.BASE_URL).then((result) => {
       if (result) {
         setIndexedUrls(result as UrlObject[]);
       }

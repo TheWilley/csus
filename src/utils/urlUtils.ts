@@ -2,9 +2,6 @@ import localforage from 'localforage';
 import { UrlObject } from '../global/types';
 import { LoaderFunctionArgs } from 'react-router-dom';
 
-// The key which identifies the list of URL's
-export const forageKey = 'indexedUrls';
-
 /**
  * Finds either a URL or shortened URL from the localForage database. 
  * @param query The search query.
@@ -17,7 +14,7 @@ export function findInForage(
   callback: (result: UrlObject | undefined) => void
 ) {
   localforage
-    .getItem<{ url: string; uid: string }[]>(forageKey)
+    .getItem<{ url: string; uid: string }[]>(import.meta.env.BASE_URL)
     .then((result) => {
       const found = result?.find((object) => {
         if (type === 'url') return object.url === query;
