@@ -84,6 +84,7 @@ export default function useShortener() {
 
   const convertAnother = () => {
     setResultIsShown(false);
+    setUrl('');
   };
 
   const toggleShowDashboard = () => {
