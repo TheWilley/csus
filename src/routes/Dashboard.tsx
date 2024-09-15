@@ -6,7 +6,7 @@ type Props = {
 
 function Dashboard(props: Props) {
     return (
-        props.indexedUrls ?
+        props.indexedUrls.length ?
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
