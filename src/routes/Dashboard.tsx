@@ -20,7 +20,7 @@ function Dashboard(props: Props) {
                         props.indexedUrls.map((item) => (
                             <tr>
                                 <td>{item.url}</td>
-                                <td>{item.shortenedUrl}</td>
+                                <td>{item.uid}</td>
                                 <td><button className='link hover:text-error'>Delete</button></td>
                                 <td><button className='link hover:text-error'>Edit</button></td>
                             </tr>

@@ -25,7 +25,7 @@ function uid() {
  */
 function generateUniqueId() {
   const uniqueId = uid();
-  findInForage(uniqueId, 'shortenedUrl', (result) => {
+  findInForage(uniqueId, 'uid', (result) => {
     if (result) generateUniqueId();
   });
   return uniqueId;
@@ -64,14 +64,14 @@ export default function useShortener() {
     if (isValidUrl(url)) {
       findInForage(url, 'url', (result) => {
         if (!result) {
-          const uniqueId = generateUniqueId();
-          const adjustedArray = [...indexedUrls, { url: url, shortenedUrl: uniqueId }];
+          const uid = generateUniqueId();
+          const adjustedArray = [...indexedUrls, { url: url, uid }];
           localforage.setItem(forageKey, adjustedArray).then(() => {
-            setShortenedUrl(urlSuffix + uniqueId);
+            setShortenedUrl(urlSuffix + uid);
             setIndexedUrls(adjustedArray);
           });
         } else {
-          setShortenedUrl(urlSuffix + result.shortenedUrl);
+          setShortenedUrl(urlSuffix + result.uid);
         }
         setResultIsShown(true);
       });

@@ -13,15 +13,15 @@ export const forageKey = 'indexedUrls';
  */
 export function findInForage(
   query: string,
-  type: 'url' | 'shortenedUrl',
+  type: 'url' | 'uid',
   callback: (result: UrlObject | undefined) => void
 ) {
   localforage
-    .getItem<{ url: string; shortenedUrl: string }[]>(forageKey)
+    .getItem<{ url: string; uid: string }[]>(forageKey)
     .then((result) => {
       const found = result?.find((object) => {
         if (type === 'url') return object.url === query;
-        else return object.shortenedUrl === query;
+        else return object.uid === query;
       });
       callback(found);
     });
@@ -35,7 +35,7 @@ export function findInForage(
 export function urlIdLoader({ params }: LoaderFunctionArgs) {
   const { urlId } = params;
   if (urlId) {
-    findInForage(urlId, 'shortenedUrl', (result) => {
+    findInForage(urlId, 'uid', (result) => {
       if (result) {
         window.location.replace(result.url);
       } else {
