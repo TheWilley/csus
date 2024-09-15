@@ -93,7 +93,9 @@ export default function useShortener() {
 
   useEffect(() => {
     localforage.getItem(forageKey).then((result) => {
-      setIndexedUrls(result as UrlObject[]);
+      if (result) {
+        setIndexedUrls(result as UrlObject[]);
+      }
     });
   }, []);
 
