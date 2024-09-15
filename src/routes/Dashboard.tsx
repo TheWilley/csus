@@ -6,29 +6,32 @@ type Props = {
 
 function Dashboard(props: Props) {
     return (
-        <div className="overflow-x-auto">
-            <table className="table">
-                {/* head */}
-                <thead>
-                    <tr>
-                        <th>Long URL</th>
-                        <th>Short URL ID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        props.indexedUrls.map((item) => (
-                            <tr>
-                                <td>{item.url}</td>
-                                <td>{item.uid}</td>
-                                <td><button className='link hover:text-error'>Delete</button></td>
-                                <td><button className='link hover:text-error'>Edit</button></td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+        props.indexedUrls ?
+            <div className="overflow-x-auto">
+                <table className="table">
+                    {/* head */}
+                    <thead>
+                        <tr>
+                            <th>Long URL</th>
+                            <th>Short URL ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            props.indexedUrls.map((item) => (
+                                <tr>
+                                    <td>{item.url}</td>
+                                    <td>{item.uid}</td>
+                                    <td><button className='link hover:text-error'>Delete</button></td>
+                                    <td><button className='link hover:text-error'>Edit</button></td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div> : (
+                <p className='p-3 font-bold'> No URL's shortened yet</p>
+            )
     );
 }
 
