@@ -9,7 +9,26 @@ import { UrlObject } from '../global/types';
  * @returns A random ID.
  */
 function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+  // Convert current timestamp to base-36 and take the last 5 characters
+  const timePart = Date.now().toString(36).slice(-5);
+
+  // Generate a random number and convert it to base-36, take the first 3 characters
+  const randomPart = Math.random().toString(36).substring(2, 5);
+
+  // Concatenate both parts to form an 8-character string
+  return timePart + randomPart;
+}
+
+/**
+ * Generates a unqiue ID.
+ * @returns A unique ID.
+ */
+function generateUniqueId() {
+  const uniqueId = uid();
+  findInForage(uniqueId, 'shortenedUrl', (result) => {
+    if (result) generateUniqueId();
+  });
+  return uniqueId;
 }
 
 /**
@@ -45,7 +64,7 @@ export default function useShortener() {
     if (isValidUrl(url)) {
       findInForage(url, 'url', (result) => {
         if (!result) {
-          const uniqueId = uid();
+          const uniqueId = generateUniqueId();
           const adjustedArray = [...indexedUrls, { url: url, shortenedUrl: uniqueId }];
           localforage.setItem(forageKey, adjustedArray).then(() => {
             setShortenedUrl(urlSuffix + uniqueId);
@@ -86,6 +105,6 @@ export default function useShortener() {
     resultIsShown,
     convertAnother,
     dashboardIsShown,
-    toggleShowDashboard
+    toggleShowDashboard,
   };
 }
