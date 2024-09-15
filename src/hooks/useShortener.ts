@@ -78,19 +78,30 @@ export default function useShortener() {
     }
   };
 
+  /**
+   * Handles URL text input change.
+   * @param event The event fired from the text input.
+   */
   const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUrl(event.currentTarget.value);
   };
 
+  /**
+   * Goes back to the homescreen and resets URL text input.
+   */
   const convertAnother = () => {
     setResultIsShown(false);
     setUrl('');
   };
 
+  /**
+   * Toggles whether the dashboard is shown or not.
+   */
   const toggleShowDashboard = () => {
     setDashboardIsShown((prev) => !prev);
   };
 
+  // Initially syncs indexedUrls with LocalForage
   useEffect(() => {
     localforage.getItem(forageKey).then((result) => {
       if (result) {
