@@ -2,6 +2,7 @@ import { UrlObject } from '../global/types';
 
 type Props = {
     indexedUrls: UrlObject[]
+    deleteUrl: (uid: string) => void
 }
 
 function Dashboard(props: Props) {
@@ -9,7 +10,6 @@ function Dashboard(props: Props) {
         props.indexedUrls.length ?
             <div className="overflow-x-auto">
                 <table className="table">
-                    {/* head */}
                     <thead>
                         <tr>
                             <th>Long URL</th>
@@ -22,8 +22,7 @@ function Dashboard(props: Props) {
                                 <tr>
                                     <td>{item.url}</td>
                                     <td>{item.uid}</td>
-                                    <td><button className='link hover:text-error'>Delete</button></td>
-                                    <td><button className='link hover:text-error'>Edit</button></td>
+                                    <td><button className='link hover:text-error' onClick={() => props.deleteUrl(item.uid)}>Delete</button></td>
                                 </tr>
                             ))
                         }

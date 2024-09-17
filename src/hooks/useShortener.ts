@@ -1,5 +1,5 @@
 import localforage from 'localforage';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { findInForage } from '../utils/urlUtils';
 import { UrlObject } from '../global/types';
 
@@ -79,6 +79,25 @@ export default function useShortener() {
   };
 
   /**
+   * Deletes a URL from the indexedUrls array.
+   * @param uid The unique ID of the URL to delete.
+   */
+  const deleteUrl = (uid: string) => {
+    if (confirm('Are you sure you want to delete this URL?')) {
+      const adjustedArray = indexedUrls.filter((url) => url.uid !== uid);
+      setIndexedUrls(adjustedArray);
+      syncLocalForage();
+    }
+  };
+
+  /**
+   * Syncs indexedUrls with LocalForage. Called after any changes to indexedUrls.
+   */
+  const syncLocalForage = useCallback(() => {
+    localforage.setItem(import.meta.env.BASE_URL, [...indexedUrls]);
+  }, [indexedUrls]);
+
+  /**
    * Handles URL text input change.
    * @param event The event fired from the text input.
    */
@@ -110,6 +129,11 @@ export default function useShortener() {
     });
   }, []);
 
+  // Add this useEffect hook
+  useEffect(() => {
+    syncLocalForage();
+  }, [indexedUrls, syncLocalForage]);
+
   return {
     url,
     indexedUrls,
@@ -120,5 +144,6 @@ export default function useShortener() {
     convertAnother,
     dashboardIsShown,
     toggleShowDashboard,
+    deleteUrl,
   };
 }
