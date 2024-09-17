@@ -32,6 +32,16 @@ function generateUniqueId() {
 }
 
 /**
+ * Validates a custom UID.
+ * @param uid The custom UID to validate.
+ * @returns True if the UID is valid, false otherwise.
+ */
+function isValidCustomUid(uid: string) {
+  const uidPattern = /^[a-zA-Z0-9_-]+$/; // Adjust the pattern as needed
+  return uidPattern.test(uid);
+}
+
+/**
  * Validates a URL in order to check if it's... valid.
  * @param urlString The url to test.
  * @returns If the URL is valid.
@@ -56,16 +66,29 @@ export default function useShortener() {
   const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
   const [dashboardIsShown, setDashboardIsShown] = useState(false);
   const [resultIsShown, setResultIsShown] = useState(false);
+  const [useCustomUid, setUseCustomUid] = useState(false);
+  const [customUid, setCustomUid] = useState('');
 
   /**
    * Shortens a URL.
    */
   const shortenUrl = () => {
     if (isValidUrl(url)) {
+      // Check if the custom UID is valid
+      if (useCustomUid && !isValidCustomUid(customUid)) {
+        alert(
+          'Invalid custom UID. Please use only alphanumeric characters, hyphens, and underscores.'
+        );
+        return;
+      }
+
+      // Check if the URL is already in the indexedUrls array
       findInForage(url, 'url', (result) => {
         if (!result) {
-          const uid = generateUniqueId();
+          const uid = customUid || generateUniqueId();
           const adjustedArray = [...indexedUrls, { url: url, uid }];
+
+          // If the URL is not in the indexedUrls array, add it
           localforage.setItem(import.meta.env.BASE_URL, adjustedArray).then(() => {
             setShortenedUrl(urlSuffix + uid);
             setIndexedUrls(adjustedArray);
@@ -111,6 +134,8 @@ export default function useShortener() {
   const convertAnother = () => {
     setResultIsShown(false);
     setUrl('');
+    setUseCustomUid(false);
+    setCustomUid('');
   };
 
   /**
@@ -118,6 +143,21 @@ export default function useShortener() {
    */
   const toggleShowDashboard = () => {
     setDashboardIsShown((prev) => !prev);
+  };
+
+  /**
+   * Toggles whether to use a custom UID or not.
+   */
+  const adjustUseCustomUid = (value: boolean) => {
+    setUseCustomUid(value);
+  };
+
+  /**
+   * Handles custom UID text input change.
+   * @param event The event fired from the text input.
+   */
+  const handleCustomUidChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setCustomUid(event.currentTarget.value);
   };
 
   // Initially syncs indexedUrls with LocalForage
@@ -145,5 +185,9 @@ export default function useShortener() {
     dashboardIsShown,
     toggleShowDashboard,
     deleteUrl,
+    useCustomUid,
+    adjustUseCustomUid,
+    customUid,
+    handleCustomUidChange,
   };
 }
