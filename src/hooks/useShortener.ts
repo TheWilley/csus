@@ -23,11 +23,10 @@ function uid() {
  * Generates a unqiue ID.
  * @returns A unique ID.
  */
-function generateUniqueId() {
+async function generateUniqueId() {
   const uniqueId = uid();
-  findInForage(uniqueId, 'uid', (result) => {
-    if (result) generateUniqueId();
-  });
+  const result = await findInForage(uniqueId, 'uid');
+  if (result) generateUniqueId();
   return uniqueId;
 }
 
@@ -72,7 +71,7 @@ export default function useShortener() {
   /**
    * Shortens a URL.
    */
-  const shortenUrl = () => {
+  const shortenUrl = async () => {
     if (isValidUrl(url)) {
       // Check if the custom UID is valid
       if (useCustomUid && !isValidCustomUid(customUid)) {
@@ -83,21 +82,20 @@ export default function useShortener() {
       }
 
       // Check if the URL is already in the indexedUrls array
-      findInForage(url, 'url', (result) => {
-        if (!result) {
-          const uid = customUid || generateUniqueId();
-          const adjustedArray = [...indexedUrls, { url: url, uid }];
+      const result = await findInForage(url, 'url');
+      if (!result) {
+        const uid = customUid || await generateUniqueId();
+        const adjustedArray = [...indexedUrls, { url: url, uid }];
 
-          // If the URL is not in the indexedUrls array, add it
-          localforage.setItem(import.meta.env.BASE_URL, adjustedArray).then(() => {
-            setShortenedUrl(urlSuffix + uid);
-            setIndexedUrls(adjustedArray);
-          });
-        } else {
-          setShortenedUrl(urlSuffix + result.uid);
-        }
-        setResultIsShown(true);
-      });
+        // If the URL is not in the indexedUrls array, add it
+        localforage.setItem(import.meta.env.BASE_URL, adjustedArray).then(() => {
+          setShortenedUrl(urlSuffix + uid);
+          setIndexedUrls(adjustedArray);
+        });
+      } else {
+        setShortenedUrl(urlSuffix + result.uid);
+      }
+      setResultIsShown(true);
     }
   };
 
