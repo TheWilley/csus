@@ -7,7 +7,7 @@ type Props = {
 function Wrapper(props: Props) {
     return (
         <div className='flex'>
-            <div className='m-auto p-3'>
+            <div className='w-full m-auto p-3'>
                 {props.children}
             </div>
         </div>

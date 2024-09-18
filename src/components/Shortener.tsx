@@ -14,7 +14,7 @@ type Props = {
 
 function Shortener(props: Props) {
     return (
-        <div className='w-[32em] form-control'>
+        <div className='form-control'>
             <div className="label">
                 <span className="label-text text-xl"><FontAwesomeIcon icon={faLink} />Enter a URL to shorten</span>
             </div>

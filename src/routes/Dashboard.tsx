@@ -8,27 +8,26 @@ type Props = {
 function Dashboard(props: Props) {
     return (
         props.indexedUrls.length ?
-            <div className="overflow-x-auto">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Long URL</th>
-                            <th>Short URL ID</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            props.indexedUrls.map((item) => (
-                                <tr>
-                                    <td>{item.url}</td>
-                                    <td>{item.uid}</td>
-                                    <td><button className='link hover:text-error' onClick={() => props.deleteUrl(item.uid)}>Delete</button></td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div> : (
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Long URL</th>
+                        <th>Short URL ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.indexedUrls.map((item) => (
+                            <tr>
+                                <td><input value={item.url} className='bg-base-200 w-full' readOnly/></td>
+                                <td>{item.uid}</td>
+                                <td><button className='link hover:text-error' onClick={() => props.deleteUrl(item.uid)}>Delete</button></td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+            : (
                 <p className='p-3 font-bold'> No URL's shortened yet</p>
             )
     );
