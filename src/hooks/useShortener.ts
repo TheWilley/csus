@@ -37,7 +37,7 @@ function generateUniqueId() {
  * @returns True if the UID is valid, false otherwise.
  */
 function isValidCustomUid(uid: string) {
-  const uidPattern = /^[a-zA-Z0-9_-]+$/; // Adjust the pattern as needed
+  const uidPattern = /^[a-zA-Z0-9_-]+$/;
   return uidPattern.test(uid);
 }
 
@@ -169,7 +169,7 @@ export default function useShortener() {
     });
   }, []);
 
-  // Add this useEffect hook
+  // Sync upon indexedUrls change
   useEffect(() => {
     syncLocalForage();
   }, [indexedUrls, syncLocalForage]);
