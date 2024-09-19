@@ -11,6 +11,7 @@ type Props = {
     handleCustomUidChange: (uid: ChangeEvent<HTMLInputElement>) => void,
     customUid: string,
     adjustUseCustomUid: (value: boolean) => void
+    errorMessage: string
 }
 
 function Shortener(props: Props) {
@@ -35,6 +36,9 @@ function Shortener(props: Props) {
                         <option value="No">No</option>
                     </select>
                     <button onClick={props.shortenUrl} className="btn btn-primary join-item rounded-r-full">Shorten</button>
+                </div>
+                <div>
+                    <p className='text-error mt-3'> {props.errorMessage} </p>
                 </div>
                 {props.useCustomUid && (
                     <>

@@ -18,7 +18,8 @@ function Root() {
         customUid,
         handleCustomUidChange,
         adjustUseCustomUid,
-        useCustomUid
+        useCustomUid,
+        errorMessage
     } = useShortener();
 
     return (
@@ -36,7 +37,7 @@ function Root() {
                         /> :
                         resultIsShown ?
                             <Result url={url} shortenedUrl={shortenedUrl} convertAnother={convertAnother} /> :
-                            <Shortener url={url} handleUrlChange={handleUrlChange} shortenUrl={shortenUrl} customUid={customUid} handleCustomUidChange={handleCustomUidChange} adjustUseCustomUid={adjustUseCustomUid} useCustomUid={useCustomUid} />
+                            <Shortener url={url} handleUrlChange={handleUrlChange} shortenUrl={shortenUrl} customUid={customUid} handleCustomUidChange={handleCustomUidChange} adjustUseCustomUid={adjustUseCustomUid} useCustomUid={useCustomUid} errorMessage={errorMessage} />
                 }
                 <div className='text-center p-3'>
                     <button className='link hover:text-primary' onClick={toggleShowDashboard}>{dashboardIsShown ? 'Back to home' : 'Manage your URL\'s'}</button>

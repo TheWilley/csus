@@ -55,6 +55,13 @@ function isValidUrl(urlString: string) {
       '(\\#[-a-z\\d_]*)?$',
     'i'
   ); // validate fragment locator
+
+  // Check if URL is leading to the same domain, thus causing an infinite loop
+  const domain = new URL(window.location.href).hostname;
+  if (urlString.includes(domain)) {
+    return false;
+  }
+
   return !!urlPattern.test(urlString);
 }
 
@@ -67,6 +74,7 @@ export default function useShortener() {
   const [resultIsShown, setResultIsShown] = useState(false);
   const [useCustomUid, setUseCustomUid] = useState(false);
   const [customUid, setCustomUid] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   /**
    * Shortens a URL.
@@ -75,8 +83,8 @@ export default function useShortener() {
     if (isValidUrl(url)) {
       // Check if the custom UID is valid
       if (useCustomUid && !isValidCustomUid(customUid)) {
-        alert(
-          'Invalid custom UID. Please use only alphanumeric characters, hyphens, and underscores.'
+        setErrorMessage(
+          'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.'
         );
         return;
       }
@@ -84,7 +92,7 @@ export default function useShortener() {
       // Check if the URL is already in the indexedUrls array
       const result = await findInForage(url, 'url');
       if (!result) {
-        const uid = customUid || await generateUniqueId();
+        const uid = customUid || (await generateUniqueId());
         const adjustedArray = [...indexedUrls, { url: url, uid }];
 
         // If the URL is not in the indexedUrls array, add it
@@ -96,6 +104,8 @@ export default function useShortener() {
         setShortenedUrl(urlSuffix + result.uid);
       }
       setResultIsShown(true);
+    } else {
+      setErrorMessage('Invalid URL. Please enter a valid URL.');
     }
   };
 
@@ -134,6 +144,7 @@ export default function useShortener() {
     setUrl('');
     setUseCustomUid(false);
     setCustomUid('');
+    setErrorMessage('');
   };
 
   /**
@@ -187,5 +198,6 @@ export default function useShortener() {
     adjustUseCustomUid,
     customUid,
     handleCustomUidChange,
+    errorMessage,
   };
 }
