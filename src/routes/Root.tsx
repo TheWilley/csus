@@ -1,7 +1,7 @@
 import Shortener from '../components/Shortener';
 import useShortener from '../hooks/useShortener';
 import Result from '../components/Result';
-import Dashboard from './Dashboard';
+import Dashboard from '../components/Dashboard';
 
 function Root() {
     const {
