@@ -9,6 +9,10 @@
 <h4 align="center">A client-side Url Shortener built with localForage and React.
 </h4>
 
+<p align="center" style="color: yellow;">
+  ⚠️ <strong>Do not use in production, currently under development</strong> ⚠️
+</p>
+
 <p align="center">
   <a href="#introduction">Introduction</a> •
   <a href="#how-to-use">How To Use</a> •
