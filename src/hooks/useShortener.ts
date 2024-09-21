@@ -66,7 +66,7 @@ function isValidUrl(urlString: string) {
 }
 
 export default function useShortener() {
-  const urlSuffix = 'http://localhost:5173/csus/';
+  const urlSuffix = window.location.href.replace('app', '');
   const [url, setUrl] = useState<string>('');
   const [shortenedUrl, setShortenedUrl] = useState<string>('');
   const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
