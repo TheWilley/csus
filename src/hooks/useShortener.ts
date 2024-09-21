@@ -26,7 +26,7 @@ function uid() {
 async function generateUniqueId() {
   const uniqueId = uid();
   const result = await findInForage(uniqueId, 'uid');
-  if (result) generateUniqueId();
+  if (result) return generateUniqueId();
   return uniqueId;
 }
 
