@@ -5,6 +5,7 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 type Props = {
@@ -14,6 +15,18 @@ type Props = {
 };
 
 function Result(props: Props) {
+  const [copiedText, setCopiedText] = useState('Copy');
+
+  // Sets state to "copied" for 2 seconds and then back to "copy"
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(props.shortenedUrl).then(() => {
+      setCopiedText('Copied!');
+      setTimeout(() => {
+        setCopiedText('Copy');
+      }, 1400);
+    });
+  };
+
   return (
     <>
       <Helmet>
@@ -59,11 +72,11 @@ function Result(props: Props) {
               Visit
             </a>
             <button
-              onClick={() => navigator.clipboard.writeText(props.shortenedUrl)}
+              onClick={copyToClipboard}
               className='btn btn-primary btn-outline'
             >
               <FontAwesomeIcon icon={faCopy} />
-              Copy
+              {copiedText}
             </button>
           </div>
           <button className='btn btn-primary mt-4' onClick={props.convertAnother}>
