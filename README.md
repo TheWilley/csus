@@ -29,7 +29,7 @@ csus is ideal for personal use cases where privacy is a priority, and link shari
 
 ## How to use
 
-Simply go to the [official webpage](url_here) to get started, or run the app yourself by following these steps:
+Simply go to the [official webpage](https://thewilley.github.io/csus/) to get started, or run the app yourself by following these steps:
 
 ```bash
 # Clone this repository
