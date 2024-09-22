@@ -53,7 +53,7 @@ function Dashboard(props: Props) {
           </tbody>
         </table>
       ) : (
-        <p className='p-3 font-bold'> No URL's shortened yet</p>
+        <p className='p-3 font-bold text-center'> No URL's shortened yet</p>
       )}
     </>
   );
