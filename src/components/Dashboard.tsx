@@ -10,7 +10,7 @@ type Props = {
 
 function Dashboard(props: Props) {
   const handleExternalLink = (uid: string) => {
-    window.open(`${new URL(window.location.href).hostname}#${uid}`, '_blank');
+    window.open(`#${uid}`, '_blank');
   };
 
   return (
