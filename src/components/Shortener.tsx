@@ -61,10 +61,7 @@ function Shortener(props: Props) {
         </div>
         {props.useCustomUid && (
           <>
-            <span className='text-slate-600 mt-3 text-md text-center md:text-left'>
-              {' '}
-              Enter a custom UID for your shortened URL
-            </span>
+            <hr />
             <input
               value={props.customUid}
               onChange={props.handleCustomUidChange}
