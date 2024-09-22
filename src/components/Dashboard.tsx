@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UrlObject } from '../global/types';
 import { Helmet } from 'react-helmet';
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   indexedUrls: UrlObject[];
@@ -7,6 +9,10 @@ type Props = {
 };
 
 function Dashboard(props: Props) {
+  const handleExternalLink = (uid: string) => {
+    window.open(`${new URL(window.location.href).hostname}#${uid}`, '_blank');
+  };
+
   return (
     <>
       <Helmet>
@@ -26,7 +32,14 @@ function Dashboard(props: Props) {
                 <td>
                   <input value={item.url} className='bg-base-200 w-full' readOnly />
                 </td>
-                <td>{item.uid}</td>
+                <td>
+                  <span className='mr-3'>{item.uid}</span>
+                  <FontAwesomeIcon
+                    icon={faExternalLink}
+                    className='cursor-pointer'
+                    onClick={() => handleExternalLink(item.uid)}
+                  />
+                </td>
                 <td>
                   <button
                     className='link hover:text-error'

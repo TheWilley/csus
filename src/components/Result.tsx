@@ -71,10 +71,7 @@ function Result(props: Props) {
               <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               Visit
             </a>
-            <button
-              onClick={copyToClipboard}
-              className='btn btn-primary btn-outline'
-            >
+            <button onClick={copyToClipboard} className='btn btn-primary btn-outline'>
               <FontAwesomeIcon icon={faCopy} />
               {copiedText}
             </button>

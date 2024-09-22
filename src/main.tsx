@@ -7,18 +7,16 @@ import Wrapper from './components/Wrapper';
 import { urlIdLoader } from './utils/urlUtils';
 
 // Create a browser router with the following routes
-const router = createHashRouter(
-  [
-    {
-      path: '/',
-      element: <Root />,
-    },
-    {
-      path: '/:urlId',
-      loader: urlIdLoader,
-    },
-  ]
-);
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <Root />,
+  },
+  {
+    path: '/:urlId',
+    loader: urlIdLoader,
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
