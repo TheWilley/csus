@@ -38,5 +38,5 @@ export async function urlIdLoader({ params }: LoaderFunctionArgs) {
       return redirect(result.url);
     }
   }
-  return redirect('/app');
+  return redirect('/');
 }

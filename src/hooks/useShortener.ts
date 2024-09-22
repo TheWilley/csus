@@ -66,7 +66,7 @@ function isValidUrl(urlString: string) {
 }
 
 export default function useShortener() {
-  const urlSuffix = window.location.href.replace('app', '');
+  const urlSuffix = window.location.href.split('/csus/')[0] + '/csus/';
   const [url, setUrl] = useState<string>('');
   const [shortenedUrl, setShortenedUrl] = useState<string>('');
   const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
@@ -97,7 +97,7 @@ export default function useShortener() {
 
         // If the URL is not in the indexedUrls array, add it
         localforage.setItem(import.meta.env.BASE_URL, adjustedArray).then(() => {
-          setShortenedUrl(urlSuffix + uid);
+          setShortenedUrl(urlSuffix + '#' + uid);
           setIndexedUrls(adjustedArray);
         });
       } else {
