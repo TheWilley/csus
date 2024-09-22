@@ -14,7 +14,7 @@ export function findInForage(
 ): Promise<UrlObject | undefined> {
   return new Promise((resolve) => {
     localforage
-      .getItem<{ url: string; uid: string }[]>(import.meta.env.BASE_URL)
+      .getItem<{ url: string; uid: string }[]>(import.meta.env.VITE_FORAGE_KEY)
       .then((result) => {
         const found = result?.find((object) => {
           if (type === 'url') return object.url === query;

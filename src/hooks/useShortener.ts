@@ -99,7 +99,7 @@ export default function useShortener() {
         const adjustedArray = [...indexedUrls, { url: url, uid }];
 
         // If the URL is not in the indexedUrls array, add it
-        localforage.setItem(import.meta.env.BASE_URL, adjustedArray).then(() => {
+        localforage.setItem(import.meta.env.VITE_FORAGE_KEY, adjustedArray).then(() => {
           setShortenedUrl(urlSuffix + '#' + uid);
           setIndexedUrls(adjustedArray);
         });
@@ -128,7 +128,7 @@ export default function useShortener() {
    * Syncs indexedUrls with LocalForage. Called after any changes to indexedUrls.
    */
   const syncLocalForage = useCallback(() => {
-    localforage.setItem(import.meta.env.BASE_URL, [...indexedUrls]);
+    localforage.setItem(import.meta.env.VITE_FORAGE_KEY, [...indexedUrls]);
   }, [indexedUrls]);
 
   /**
@@ -174,7 +174,7 @@ export default function useShortener() {
 
   // Initially syncs indexedUrls with LocalForage
   useEffect(() => {
-    localforage.getItem(import.meta.env.BASE_URL).then((result) => {
+    localforage.getItem(import.meta.env.VITE_FORAGE_KEY).then((result) => {
       if (result) {
         setIndexedUrls(result as UrlObject[]);
       }
