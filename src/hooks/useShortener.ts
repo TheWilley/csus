@@ -24,9 +24,12 @@ function uid() {
  * @returns A unique ID.
  */
 async function generateUniqueId() {
-  const uniqueId = uid();
-  const result = await findInForage(uniqueId, 'uid');
-  if (result) return generateUniqueId();
+  let uniqueId;
+  let result;
+  do {
+    uniqueId = uid();
+    result = await findInForage(uniqueId, 'uid');
+  } while (result);
   return uniqueId;
 }
 
