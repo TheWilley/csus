@@ -27,15 +27,21 @@ function Shortener(props: Props) {
             Enter a URL to shorten
           </span>
         </div>
-        <div className='join'>
+        <input
+          value={props.url}
+          onChange={props.handleUrlChange}
+          className='md:hidden input input-primary w-full'
+          placeholder='Enter long link here'
+        />
+        <div className='join mt-2 md:mt-0'>
           <input
             value={props.url}
             onChange={props.handleUrlChange}
-            className='input input-primary join-item w-full'
+            className='hidden md:block input input-primary join-item w-full'
             placeholder='Enter long link here'
           />
           <select
-            className='select select-primary join-item'
+            className='select select-primary md:join-item rounded-l-lg rounded-r-none w-full md:w-auto'
             onChange={(e) => props.adjustUseCustomUid(e.target.value === 'Yes')}
             value={props.useCustomUid ? 'Yes' : 'No'}
           >
@@ -51,11 +57,11 @@ function Shortener(props: Props) {
           </button>
         </div>
         <div>
-          <p className='text-error mt-3'> {props.errorMessage} </p>
+          <p className='text-error mt-3 text-center md:text-left'> {props.errorMessage} </p>
         </div>
         {props.useCustomUid && (
           <>
-            <span className='text-slate-600 mt-3 text-md'>
+            <span className='text-slate-600 mt-3 text-md text-center md:text-left'>
               {' '}
               Enter a custom UID for your shortened URL
             </span>
