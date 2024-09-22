@@ -2,6 +2,7 @@ import Shortener from '../components/Shortener';
 import useShortener from '../hooks/useShortener';
 import Result from '../components/Result';
 import Dashboard from '../components/Dashboard';
+import Footer from '../components/Footer';
 
 function Root() {
   const {
@@ -51,6 +52,7 @@ function Root() {
           </button>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
