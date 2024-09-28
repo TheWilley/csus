@@ -2,6 +2,7 @@ import localforage from 'localforage';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { SaveData, UrlObject } from '../global/types';
 import ShortUniqueId from 'short-unique-id';
+import validUrl from 'valid-url';
 
 /**
  * Validates a custom UID.
@@ -19,15 +20,7 @@ function isValidCustomUid(uid: string) {
  * @returns If the URL is valid.
  */
 function isValidUrl(urlString: string) {
-  const urlPattern = new RegExp(
-    '^(https?:\\/\\/)?' + // validate protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
-      '(\\#[-a-z\\d_]*)?$',
-    'i'
-  ); // validate fragment locator
+  const isValidUrl = validUrl.isUri(urlString);
 
   // Check if URL is leading to the same domain, thus causing an infinite loop
   const domain = new URL(window.location.href).hostname;
@@ -35,7 +28,7 @@ function isValidUrl(urlString: string) {
     return false;
   }
 
-  return !!urlPattern.test(urlString);
+  return isValidUrl;
 }
 
 export default function useShortener() {
