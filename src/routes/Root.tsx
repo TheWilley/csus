@@ -21,6 +21,9 @@ function Root() {
     adjustUseCustomUid,
     useCustomUid,
     errorMessage,
+    deleteAllUrls,
+    exportUrls,
+    importUrls,
   } = useShortener();
 
   return (
@@ -31,7 +34,13 @@ function Root() {
       </div>
       <div className='bg-base-200 p-3 rounded'>
         {dashboardIsShown ? (
-          <Dashboard indexedUrls={indexedUrls} deleteUrl={deleteUrl} />
+          <Dashboard
+            indexedUrls={indexedUrls}
+            deleteUrl={deleteUrl}
+            deleteAllUrls={deleteAllUrls}
+            exportUrls={exportUrls}
+            importUrls={importUrls}
+          />
         ) : resultIsShown ? (
           <Result url={url} shortenedUrl={shortenedUrl} convertAnother={convertAnother} />
         ) : (
@@ -48,13 +57,11 @@ function Root() {
         )}
         <div className='text-center p-3'>
           <button className='link hover:text-primary' onClick={toggleShowDashboard}>
-            {dashboardIsShown ? 'Back to home' : 'Manage your URL\'s'}
+            {dashboardIsShown ? 'Back to home' : "Manage your URL's"}
           </button>
         </div>
       </div>
-      {import.meta.env.VITE_SHOW_FOOTER === 'true' && (
-        <Footer />
-      )}
+      {import.meta.env.VITE_SHOW_FOOTER === 'true' && <Footer />}
     </>
   );
 }

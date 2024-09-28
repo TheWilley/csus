@@ -104,12 +104,13 @@ export default function useShortener() {
     if (confirm('Are you sure you want to delete this URL?')) {
       const adjustedArray = indexedUrls.filter((url) => url.uid !== uid);
       setIndexedUrls(adjustedArray);
-      syncLocalForage();
     }
   };
 
   /**
    * Syncs indexedUrls with LocalForage. Called after any changes to indexedUrls.
+   *
+   * **This method should not be called directly. Set indexedUrls instead to trigger a sync.**
    */
   const syncLocalForage = useCallback(() => {
     localforage.setItem(import.meta.env.VITE_FORAGE_KEY, [...indexedUrls]);
@@ -156,6 +157,49 @@ export default function useShortener() {
     setCustomUid(event.currentTarget.value);
   };
 
+  /**
+   * Deletes all URLs from the indexedUrls array and LocalForage.
+   */
+  const deleteAllUrls = () => {
+    if (confirm('Are you sure you want to delete all URLs?')) {
+      setIndexedUrls([]);
+      syncLocalForage();
+    }
+  };
+
+  /**
+   * Exports the indexedUrls array as a JSON file.
+   */
+  const exportUrls = () => {
+    const data = JSON.stringify(indexedUrls);
+    const blob = new Blob([data], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'csus-urls.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  /**
+   * Imports URLs from a JSON file.
+   * @param event The event fired from the file input.
+   */
+  const importUrls = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = e.target?.result;
+        if (typeof data === 'string') {
+          const parsedData = JSON.parse(data) as UrlObject[];
+          setIndexedUrls(parsedData);
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+
   // Initially syncs indexedUrls with LocalForage
   useEffect(() => {
     localforage.getItem(import.meta.env.VITE_FORAGE_KEY).then((result) => {
@@ -186,5 +230,8 @@ export default function useShortener() {
     customUid,
     handleCustomUidChange,
     errorMessage,
+    deleteAllUrls,
+    exportUrls,
+    importUrls,
   };
 }

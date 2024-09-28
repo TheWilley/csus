@@ -57,7 +57,10 @@ function Shortener(props: Props) {
           </button>
         </div>
         <div>
-          <p className='text-error mt-3 text-center md:text-left'> {props.errorMessage} </p>
+          <p className='text-error mt-3 text-center md:text-left'>
+            {' '}
+            {props.errorMessage}{' '}
+          </p>
         </div>
         {props.useCustomUid && (
           <>
