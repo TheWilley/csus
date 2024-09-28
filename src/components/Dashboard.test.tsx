@@ -89,7 +89,7 @@ describe('Dashboard tests', () => {
             expect(deleteAllUrls).toHaveBeenCalled();
         });
 
-        test('should call importUrls function when import button is clicked', () => {
+        test('Should call importUrls function when import button is clicked', () => {
             const importUrls = vi.fn();
             const { getByText } = render(
                 <Dashboard
