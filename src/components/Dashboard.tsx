@@ -36,7 +36,7 @@ function Dashboard(props: Props) {
           </thead>
           <tbody>
             {props.indexedUrls.map((item) => (
-              <tr>
+              <tr key={item.uid}>
                 <td>
                   <input value={item.url} className='bg-base-200 w-full' readOnly />
                 </td>
