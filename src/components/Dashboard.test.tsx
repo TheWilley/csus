@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
 import Dashboard from './Dashboard';
 
@@ -13,7 +13,7 @@ describe('Dashboard tests', () => {
     describe('Dashboard table', () => {
         test('Should show "No URL\'s shortened yet"', () => {
             const fn = vi.fn();
-            render(
+            const { getByText } = render(
                 <Dashboard
                     deleteAllUrls={fn}
                     deleteUrl={fn}
@@ -22,12 +22,12 @@ describe('Dashboard tests', () => {
                     indexedUrls={[]}
                 />
             );
-            expect(screen.getByText(/No URL's shortened yet/i)).toBeDefined();
+            expect(getByText(/No URL's shortened yet/i)).toBeDefined();
         });
 
         test('Should show table with headers + 3 rows with correct data rendered"', () => {
             const fn = vi.fn();
-            const { getByText } = render(
+            const { getByText, getByTestId } = render(
                 <Dashboard
                     deleteAllUrls={fn}
                     deleteUrl={fn}
@@ -38,7 +38,7 @@ describe('Dashboard tests', () => {
             );
 
             // Table should be rendered and have 3 rows
-            const table = screen.getByTestId('dashboard-table');
+            const table = getByTestId('dashboard-table');
             expect(table).toBeDefined(); // Check if table is rendered
             expect(table.querySelectorAll('tr').length).toBe(4); // Check if table has 4 rows (header + 3 data rows)
 
@@ -121,7 +121,7 @@ describe('Dashboard tests', () => {
 
         test('Should call deleteUrl function when delete button is clicked', () => {
             const deleteUrl = vi.fn();
-            render(
+            const { getByTestId } = render(
                 <Dashboard
                     deleteAllUrls={vi.fn()}
                     deleteUrl={deleteUrl}
@@ -132,7 +132,7 @@ describe('Dashboard tests', () => {
             );
 
             // Click on first delete button on the first row
-            const table = screen.getByTestId('dashboard-table');
+            const table = getByTestId('dashboard-table');
             table.querySelectorAll('button')[0].click();
 
             // Check if deleteUrl function is called
