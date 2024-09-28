@@ -18,12 +18,15 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "i": "^0.3.7",
     "localforage": "^1.10.0",
+    "npm": "^10.8.3",
     "prettier": "^3.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-router-dom": "^6.26.1"
+    "react-router-dom": "^6.26.1",
+    "short-unique-id": "^5.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -2,36 +2,7 @@ import localforage from 'localforage';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { findInForage } from '../utils/urlUtils';
 import { UrlObject } from '../global/types';
-
-/**
- * Generates a random ID based on the current date.
- * @see https://stackoverflow.com/a/53116778
- * @returns A random ID.
- */
-function uid() {
-  // Convert current timestamp to base-36 and take the last 5 characters
-  const timePart = Date.now().toString(36).slice(-5);
-
-  // Generate a random number and convert it to base-36, take the first 3 characters
-  const randomPart = Math.random().toString(36).substring(2, 5);
-
-  // Concatenate both parts to form an 8-character string
-  return timePart + randomPart;
-}
-
-/**
- * Generates a unqiue ID.
- * @returns A unique ID.
- */
-async function generateUniqueId() {
-  let uniqueId;
-  let result;
-  do {
-    uniqueId = uid();
-    result = await findInForage(uniqueId, 'uid');
-  } while (result);
-  return uniqueId;
-}
+import ShortUniqueId from 'short-unique-id';
 
 /**
  * Validates a custom UID.
@@ -78,6 +49,20 @@ export default function useShortener() {
   const [useCustomUid, setUseCustomUid] = useState(false);
   const [customUid, setCustomUid] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  /**
+   * Generates a unqiue ID.
+   * @returns A unique ID.
+   */
+  const generateUniqueId = () => {
+    let uniqueId: string;
+    let result: boolean;
+    do {
+      uniqueId = new ShortUniqueId({ length: 8 }).randomUUID();
+      result = indexedUrls.some((url) => url.uid === uniqueId);
+    } while (result);
+    return uniqueId;
+  };
 
   /**
    * Shortens a URL.
