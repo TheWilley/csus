@@ -1,6 +1,6 @@
 import localforage from 'localforage';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { UrlObject } from '../global/types';
+import { SaveData, UrlObject } from '../global/types';
 import ShortUniqueId from 'short-unique-id';
 
 /**
@@ -171,7 +171,11 @@ export default function useShortener() {
    * Exports the indexedUrls array as a JSON file.
    */
   const exportUrls = () => {
-    const data = JSON.stringify(indexedUrls);
+    const saveData: SaveData = {
+      id: 'csus-urls',
+      data: indexedUrls,
+    };
+    const data = JSON.stringify(saveData);
     const blob = new Blob([data], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -192,8 +196,12 @@ export default function useShortener() {
       reader.onload = (e) => {
         const data = e.target?.result;
         if (typeof data === 'string') {
-          const parsedData = JSON.parse(data) as UrlObject[];
-          setIndexedUrls(parsedData);
+          const parsedData = JSON.parse(data) as SaveData;
+          if (parsedData.id !== 'csus-urls') {
+            return;
+          } else {
+            setIndexedUrls(parsedData.data);
+          }
         }
       };
       reader.readAsText(file);
