@@ -1,6 +1,5 @@
 import localforage from 'localforage';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { findInForage } from '../utils/urlUtils';
 import { UrlObject } from '../global/types';
 import ShortUniqueId from 'short-unique-id';
 
@@ -67,7 +66,7 @@ export default function useShortener() {
   /**
    * Shortens a URL.
    */
-  const shortenUrl = async () => {
+  const shortenUrl = () => {
     if (isValidUrl(url)) {
       // Check if the custom UID is valid
       if (useCustomUid && !isValidCustomUid(customUid)) {
@@ -78,9 +77,9 @@ export default function useShortener() {
       }
 
       // Check if the URL is already in the indexedUrls array
-      const result = await findInForage(url, 'url');
+      const result = indexedUrls.find((object) => object.url === url);
       if (!result) {
-        const uid = customUid || (await generateUniqueId());
+        const uid = customUid || generateUniqueId();
         const adjustedArray = [...indexedUrls, { url: url, uid }];
 
         // If the URL is not in the indexedUrls array, add it

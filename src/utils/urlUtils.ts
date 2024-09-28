@@ -8,7 +8,7 @@ import { LoaderFunctionArgs, redirect } from 'react-router-dom';
  * @param type The type of data to be returned from the query.
  * @param callback Callback function with the result of the query.
  */
-export function findInForage(
+function findInForage(
   query: string,
   type: 'url' | 'uid'
 ): Promise<UrlObject | undefined> {
