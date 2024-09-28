@@ -88,7 +88,7 @@ export default function useShortener() {
           setIndexedUrls(adjustedArray);
         });
       } else {
-        setShortenedUrl(urlSuffix + result.uid);
+        setShortenedUrl(urlSuffix + '#' + result.uid);
       }
       setResultIsShown(true);
     } else {
