@@ -5,4 +5,8 @@ export default {
   plugins: [react()],
   base: '/csus/',
   envDir: './src',
+  test: {
+    globals: true,
+    environment: 'jsdom',
+  },
 };

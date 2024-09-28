@@ -27,7 +27,7 @@ function Dashboard(props: Props) {
         <title>Dashboard - csus</title>
       </Helmet>
       {props.indexedUrls.length ? (
-        <table className='table'>
+        <table className='table' data-testid='dashboard-table'>
           <thead>
             <tr>
               <th>Long URL</th>
