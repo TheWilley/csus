@@ -233,5 +233,6 @@ export default function useShortener() {
     deleteAllUrls,
     exportUrls,
     importUrls,
+    generateUniqueId,
   };
 }
