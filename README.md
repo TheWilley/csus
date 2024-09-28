@@ -41,6 +41,9 @@ $ cd csus
 # Install dependencies
 $ npm install
 
+# Run tests
+$ npm run test
+
 # Build app
 $ npm run build
 
