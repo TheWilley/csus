@@ -51,10 +51,6 @@ $ npm run preview
 $ npm run dev
 ```
 
-## How it works
-
-The app uses [localForage](https://localforage.github.io/localForage/) to store and retrieve data from IndexedDB. When a user enters a URL to shorten, the app generates a random string to serve as the shortened URL. This string is then stored along with the original URL in IndexedDB. When a user visits the shortened URL, the app retrieves the original URL from IndexedDB and redirects the user to the original URL. Since the hashrouter also is used, the app can handle the shortened URL without needing to communicate with a server, making the entire process client-side.
-
 ## License
 
 [MIT](https://github.com/TheWilley/csus/blob/main/LICENSE)
