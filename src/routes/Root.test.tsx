@@ -81,4 +81,19 @@ describe('Root Component', () => {
         const result = screen.queryByText('Invalid URL. Please enter a valid URL.');
         expect(result).toBeTruthy();
     });
+
+    test('display the custom UID input when adjusting select', async () => {
+        await act(async () => {
+            render(<Root />);
+        });
+
+        // Select the custom UID option
+        const select = screen.getByTestId('custom-uid-select');
+        await act(async () => {
+            fireEvent.change(select, { target: { value: 'Yes' } });
+        });
+
+        // Check if the custom UID input is shown
+        expect(screen.queryByPlaceholderText('Enter custom UID here')).toBeTruthy();
+    });
 });
