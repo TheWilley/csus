@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UrlObject } from '../global/types';
-import { Helmet } from 'react-helmet';
 import {
   faDownload,
   faExternalLink,
@@ -23,9 +22,6 @@ function Dashboard(props: Props) {
 
   return (
     <>
-      <Helmet>
-        <title>Dashboard - csus</title>
-      </Helmet>
       {props.indexedUrls.length ? (
         <table className='table' data-testid='dashboard-table'>
           <thead>
