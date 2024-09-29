@@ -25,7 +25,7 @@ csus is a fully client-side URL shortener, eliminating the need for any external
 
 - All shortened URLs are saved locally in your browser
 - No information is transmitted over the internet or stored on remote servers
-- Shortened URLs are not shareable across devices or users
+- Shortened URLs are not shareable across devices or users (unless you export/import them)
 - Anyone with access to your browser can view and modify the shortened URLs
 
 ## How to use
