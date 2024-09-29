@@ -60,33 +60,52 @@ export default function useShortener() {
    * Shortens a URL.
    */
   const shortenUrl = () => {
-    if (isValidUrl(url)) {
-      // Check if the custom UID is valid
-      if (useCustomUid && !isValidCustomUid(customUid)) {
+    const addHashToStart = (str: string) => {
+      return str.startsWith('#') ? str : '#' + str;
+    };
+
+    if (!isValidUrl(url)) {
+      setErrorMessage('Invalid URL. Please enter a valid URL.');
+      return;
+    }
+
+    // Check if the URL already has a shortened version
+    const existingUrlObject = indexedUrls.find((urlObject) => urlObject.url === url);
+    if (existingUrlObject) {
+      // If the URL already exists, use its existing UID (ignore custom UID)
+      setShortenedUrl(urlSuffix + addHashToStart(existingUrlObject.uid));
+      setResultIsShown(true);
+      return;
+    }
+
+    // Validate custom UID if provided
+    if (useCustomUid) {
+      if (!isValidCustomUid(customUid)) {
         setErrorMessage(
           'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.'
         );
         return;
       }
 
-      // Check if the URL is already in the indexedUrls array
-      const result = indexedUrls.find((object) => object.url === url);
-      if (!result) {
-        const uid = customUid || generateUniqueId();
-        const adjustedArray = [...indexedUrls, { url: url, uid }];
-
-        // If the URL is not in the indexedUrls array, add it
-        localforage.setItem(import.meta.env.VITE_FORAGE_KEY, adjustedArray).then(() => {
-          setShortenedUrl(urlSuffix + '#' + uid);
-          setIndexedUrls(adjustedArray);
-        });
-      } else {
-        setShortenedUrl(urlSuffix + '#' + result.uid);
+      // Check if custom UID already exists
+      const existingUid = indexedUrls.some((urlObject) => urlObject.uid === customUid);
+      if (existingUid) {
+        setErrorMessage('Custom UID already exists. Please enter a different one.');
+        return;
       }
-      setResultIsShown(true);
-    } else {
-      setErrorMessage('Invalid URL. Please enter a valid URL.');
     }
+
+    // If no existing URL, generate new UID or use custom one
+    const uid = customUid || generateUniqueId();
+    const updatedUrls = [...indexedUrls, { url, uid }];
+
+    // Store the new URL/UID pair
+    localforage.setItem(import.meta.env.VITE_FORAGE_KEY, updatedUrls).then(() => {
+      setShortenedUrl(urlSuffix + addHashToStart(uid));
+      setIndexedUrls(updatedUrls);
+    });
+
+    setResultIsShown(true);
   };
 
   /**
