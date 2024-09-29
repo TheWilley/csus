@@ -10,6 +10,10 @@
 </h4>
 
 <p align="center">
+  <img src="https://github.com/TheWilley/csus/actions/workflows/main.yml/badge.svg" alt="example workflow">
+</p>
+
+<p align="center">
   <a href="#introduction">Introduction</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#license">License</a>
