@@ -67,6 +67,7 @@ function Shortener(props: Props) {
             <hr />
             <input
               value={props.customUid}
+              maxLength={parseInt(import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT)}
               onChange={props.handleCustomUidChange}
               className='input input-primary mt-2'
               placeholder='Enter custom UID here'

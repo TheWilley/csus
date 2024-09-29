@@ -93,6 +93,14 @@ export default function useShortener() {
         setErrorMessage('Custom UID already exists. Please enter a different one.');
         return;
       }
+
+      // Check if UID is too long
+      if (customUid.length > parseInt(import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT)) {
+        setErrorMessage(
+          `Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.`
+        );
+        return;
+      }
     }
 
     // If no existing URL, generate new UID or use custom one
