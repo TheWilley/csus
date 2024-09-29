@@ -21,11 +21,12 @@
 
 ## Introduction
 
-csus is a fully client-side URL shortener, eliminating the need for any external server or database. Instead, it leverages IndexedDB, a browser-based storage solution, to store and retrieve data. This means all shortened URLs are saved locally in your browser, meaning that no information is transmitted over the internet or stored on remote servers, enhancing privacy and security.
+csus is a fully client-side URL shortener, eliminating the need for any external server or database. Instead, it leverages IndexedDB, a browser-based storage solution, to store and retrieve data. This means:
 
-However, this approach comes with the limitation that shortened URLs are not shareable across devices or users. Since the data is kept within your browser's storage, only you can access and use the shortened links on that specific browser and device. This trade-off results in a highly private URL shortening experience, where your data remains entirely under your control, but at the cost of portability.
-
-csus is ideal for personal use cases where privacy is a priority, and link sharing isn't necessary. It also provides the convenience of quick access to frequently used URLs without exposing them to third-party services.
+- All shortened URLs are saved locally in your browser
+- No information is transmitted over the internet or stored on remote servers
+- Shortened URLs are not shareable across devices or users
+- Anyone with access to your browser can view and modify the shortened URLs
 
 ## How to use
 
