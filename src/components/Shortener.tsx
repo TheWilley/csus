@@ -36,6 +36,7 @@ function Shortener(props: Props) {
           placeholder='Enter long link here'
         />
         <select
+          data-testid={'custom-uid-select'}
           className='select select-primary md:join-item rounded-l-lg rounded-r-none w-full md:w-auto'
           onChange={(e) => props.adjustUseCustomUid(e.target.value === 'Yes')}
           value={props.useCustomUid ? 'Yes' : 'No'}
