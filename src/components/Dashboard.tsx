@@ -36,11 +36,11 @@ function Dashboard(props: Props) {
                 <td>
                   <input value={item.url} className='bg-base-200 w-full' readOnly />
                 </td>
-                <td>
-                  <span className='mr-3'>{item.uid}</span>
+                <td className="flex items-center">
+                  <span className="mr-3">{item.uid}</span>
                   <FontAwesomeIcon
                     icon={faExternalLink}
-                    className='cursor-pointer'
+                    className="cursor-pointer"
                     onClick={() => handleExternalLink(item.uid)}
                   />
                 </td>
