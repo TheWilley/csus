@@ -46,7 +46,7 @@ function Dashboard(props: Props) {
                 </td>
                 <td>
                   <button
-                    className='link hover:text-error'
+                    className='btn btn-sm w-full btn-outline btn-error flex-shrink-0 rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 hover:!text-white'
                     onClick={() => props.deleteUrl(item.uid)}
                   >
                     Delete
