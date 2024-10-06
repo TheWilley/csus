@@ -14,7 +14,7 @@ describe('Root Component', () => {
         await act(async () => {
             render(<Root />);
         });
-        expect(screen.queryByText('Manage your URL\'s')).toBeTruthy();
+        expect(screen.queryByText('Manage your URLs')).toBeTruthy();
     });
 
     test('renders the Result component when entering a link and clicking "Shorten"', async () => {
@@ -42,7 +42,7 @@ describe('Root Component', () => {
         await act(async () => {
             render(<Root />);
         });
-        const button = screen.getByText('Manage your URL\'s');
+        const button = screen.getByText('Manage your URLs');
         await act(async () => {
             fireEvent.click(button);
         });
