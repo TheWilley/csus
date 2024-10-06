@@ -57,7 +57,7 @@ function Dashboard(props: Props) {
           </tbody>
         </table>
       ) : (
-        <p className='p-3 font-bold text-center'> No URL's shortened yet</p>
+        <p className='p-3 font-bold text-center'> No URLs shortened yet</p>
       )}
       <hr />
       <div className='flex justify-center mt-5'>

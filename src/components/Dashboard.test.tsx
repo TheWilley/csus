@@ -22,7 +22,7 @@ describe('Dashboard tests', () => {
                     indexedUrls={[]}
                 />
             );
-            expect(getByText(/No URL's shortened yet/i)).toBeDefined();
+            expect(getByText(/No URLs shortened yet/i)).toBeDefined();
         });
 
         test('Should show table with headers + 3 rows with correct data rendered"', () => {
