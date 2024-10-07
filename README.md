@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="csus.png" alt="FruityDancitor" width="200">
+  <img src="csus.png" alt="csus" width="200">
   <br>
   csus
   <br>
