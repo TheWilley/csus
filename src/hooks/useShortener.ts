@@ -174,7 +174,7 @@ export default function useShortener() {
    * @param event The event fired from the text input.
    */
   const handleCustomUidChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCustomUid(event.currentTarget.value);
+    setCustomUid(event.currentTarget.value.toLowerCase());
   };
 
   /**
