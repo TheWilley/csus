@@ -36,11 +36,11 @@ function Dashboard(props: Props) {
                 <td>
                   <input value={item.url} className='bg-base-200 w-full' readOnly />
                 </td>
-                <td className="flex items-center">
-                  <span className="mr-3">{item.uid}</span>
+                <td className='flex items-center'>
+                  <span className='mr-3'>{item.uid}</span>
                   <FontAwesomeIcon
                     icon={faExternalLink}
-                    className="cursor-pointer"
+                    className='cursor-pointer'
                     onClick={() => handleExternalLink(item.uid)}
                   />
                 </td>
@@ -60,7 +60,7 @@ function Dashboard(props: Props) {
         <p className='p-3 font-bold text-center'> No URLs shortened yet</p>
       )}
       <hr />
-      <div className='flex justify-center mt-5'>
+      <div className='flex justify-center mt-5 mb-2'>
         <div className='grid md:grid-cols-3 gap-3 w-full'>
           <div className='action-item flex items-center'>
             <button

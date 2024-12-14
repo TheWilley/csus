@@ -52,7 +52,7 @@ function Root() {
           />
         )}
         <div className='text-center p-3'>
-          <button className='link hover:text-primary' onClick={toggleShowDashboard}>
+          <button className='btn btn-sm btn-outline' onClick={toggleShowDashboard}>
             {dashboardIsShown ? 'Back to home' : 'Manage your URLs'}
           </button>
         </div>
