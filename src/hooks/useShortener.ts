@@ -38,7 +38,6 @@ export default function useShortener() {
   const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
   const [dashboardIsShown, setDashboardIsShown] = useState(false);
   const [resultIsShown, setResultIsShown] = useState(false);
-  const [useCustomUid, setUseCustomUid] = useState(false);
   const [customUid, setCustomUid] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -79,7 +78,7 @@ export default function useShortener() {
     }
 
     // Validate custom UID if provided
-    if (useCustomUid) {
+    if (customUid.length) {
       if (!isValidCustomUid(customUid)) {
         setErrorMessage(
           'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.'
@@ -150,7 +149,6 @@ export default function useShortener() {
   const convertAnother = () => {
     setResultIsShown(false);
     setUrl('');
-    setUseCustomUid(false);
     setCustomUid('');
     setErrorMessage('');
   };
@@ -160,13 +158,6 @@ export default function useShortener() {
    */
   const toggleShowDashboard = () => {
     setDashboardIsShown((prev) => !prev);
-  };
-
-  /**
-   * Toggles whether to use a custom UID or not.
-   */
-  const adjustUseCustomUid = (value: boolean) => {
-    setUseCustomUid(value);
   };
 
   /**
@@ -253,8 +244,6 @@ export default function useShortener() {
     dashboardIsShown,
     toggleShowDashboard,
     deleteUrl,
-    useCustomUid,
-    adjustUseCustomUid,
     customUid,
     handleCustomUidChange,
     errorMessage,

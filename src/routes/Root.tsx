@@ -18,8 +18,6 @@ function Root() {
     deleteUrl,
     customUid,
     handleCustomUidChange,
-    adjustUseCustomUid,
-    useCustomUid,
     errorMessage,
     deleteAllUrls,
     exportUrls,
@@ -50,8 +48,6 @@ function Root() {
             shortenUrl={shortenUrl}
             customUid={customUid}
             handleCustomUidChange={handleCustomUidChange}
-            adjustUseCustomUid={adjustUseCustomUid}
-            useCustomUid={useCustomUid}
             errorMessage={errorMessage}
           />
         )}
