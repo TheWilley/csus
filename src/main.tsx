@@ -5,16 +5,33 @@ import './index.css';
 import Root from './routes/Root';
 import Wrapper from './components/Wrapper';
 import { urlIdLoader } from './utils/urlUtils';
+import Dashboard from './routes/Dashboard.tsx';
+import Result from './routes/Result.tsx';
+import Layout from './routes/Layout.tsx';
 
 // Create a browser router with the following routes
 const router = createHashRouter([
   {
     path: '/',
-    element: <Root />,
-  },
-  {
-    path: '/:urlId',
-    loader: urlIdLoader,
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Root />,
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard />,
+      },
+      {
+        path: '/result',
+        element: <Result />,
+      },
+      {
+        path: '/:urlId',
+        loader: urlIdLoader,
+      },
+    ],
   },
 ]);
 

@@ -1,17 +1,17 @@
 import { faLink, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ChangeEvent } from 'react';
+import { useShortenerContext } from './ShortenerContext';
 
-type Props = {
-  url: string;
-  handleUrlChange: (url: ChangeEvent<HTMLInputElement>) => void;
-  shortenUrl: () => void;
-  handleCustomUidChange: (uid: ChangeEvent<HTMLInputElement>) => void;
-  customUid: string;
-  errorMessage: string;
-};
+function Shortener() {
+  const {
+    url,
+    handleUrlChange,
+    shortenUrl,
+    errorMessage,
+    customUid,
+    handleCustomUidChange,
+  } = useShortenerContext();
 
-function Shortener(props: Props) {
   return (
     <div className='form-control'>
       <div className='label'>
@@ -21,15 +21,15 @@ function Shortener(props: Props) {
         </span>
       </div>
       <input
-        value={props.url}
-        onChange={props.handleUrlChange}
+        value={url}
+        onChange={handleUrlChange}
         className='md:hidden input input-primary w-full'
         placeholder='Enter long link here'
       />
       <div className='mt-2 md:mt-0'>
         <input
-          value={props.url}
-          onChange={props.handleUrlChange}
+          value={url}
+          onChange={handleUrlChange}
           className='hidden md:block input input-primary w-full mb-2'
           placeholder='Enter long link here'
         />
@@ -40,22 +40,22 @@ function Shortener(props: Props) {
           </span>
         </div>
         <input
-          value={props.customUid}
+          value={customUid}
           maxLength={parseInt(import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT)}
-          onChange={props.handleCustomUidChange}
+          onChange={handleCustomUidChange}
           className='input input-primary mt-2 w-full mb-5'
           placeholder='Enter custom UID here'
         />
         <button
-          onClick={props.shortenUrl}
+          onClick={shortenUrl}
           className='btn btn-primary rounded-lg block w-full'
-          disabled={props.url.length === 0}
+          disabled={url.length === 0}
         >
           Shorten
         </button>
       </div>
       <div>
-        <p className='text-error mt-3 text-center'> {props.errorMessage} </p>
+        <p className='text-error mt-3 text-center'> {errorMessage} </p>
       </div>
     </div>
   );

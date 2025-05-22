@@ -1,118 +1,84 @@
 import localforage from 'localforage';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { SaveData, UrlObject } from '../global/types';
-import ShortUniqueId from 'short-unique-id';
-import validUrl from 'valid-url';
-
-/**
- * Validates a custom UID.
- * @param uid The custom UID to validate.
- * @returns True if the UID is valid, false otherwise.
- */
-function isValidCustomUid(uid: string) {
-  const uidPattern = /^[a-zA-Z0-9_-]+$/;
-  return uidPattern.test(uid);
-}
-
-/**
- * Validates a URL in order to check if it's... valid.
- * @param urlString The url to test.
- * @returns If the URL is valid.
- */
-function isValidUrl(urlString: string) {
-  const isValidUrl = validUrl.isUri(urlString);
-
-  // Check if URL is leading to the same domain, thus causing an infinite loop
-  const domain = new URL(window.location.href).hostname;
-  if (urlString.includes(domain)) {
-    return false;
-  }
-
-  return isValidUrl;
-}
+import {
+  addHashToStart,
+  generateUniqueId,
+  getUrlSuffix,
+  isValidCustomUid,
+  isValidUrl,
+} from '../utils/urlUtils';
+import { useNavigate } from 'react-router-dom';
 
 export default function useShortener() {
-  const urlSuffix = window.location.href.split('/csus/')[0] + '/csus/';
-  const [url, setUrl] = useState<string>('');
-  const [shortenedUrl, setShortenedUrl] = useState<string>('');
+  const errorMessages = useRef({
+    invalidUrl: 'Invalid URL. Please enter a valid URL.',
+    invalidCustomUid:
+      'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.',
+    customUidAlreadyExists: 'Custom UID already exists. Please enter a different one.',
+    customUidTooLong:
+      'Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.',
+  });
+  const navigate = useNavigate();
+  const [longUrl, setLongUrl] = useState<string>('');
   const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
-  const [dashboardIsShown, setDashboardIsShown] = useState(false);
-  const [resultIsShown, setResultIsShown] = useState(false);
   const [customUid, setCustomUid] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  /**
-   * Generates a unqiue ID.
-   * @returns A unique ID.
-   */
-  const generateUniqueId = () => {
-    let uniqueId: string;
-    let result: boolean;
-    do {
-      uniqueId = new ShortUniqueId({ length: 8 }).randomUUID();
-      result = indexedUrls.some((url) => url.uid === uniqueId);
-    } while (result);
-    return uniqueId;
+  const navigateToResult = (shortUrl: string) => {
+    const params = new URLSearchParams();
+    params.set('longUrl', longUrl);
+    params.set('shortUrl', shortUrl);
+
+    navigate(`/result?${params.toString()}`);
   };
 
   /**
    * Shortens a URL.
    */
   const shortenUrl = () => {
-    const addHashToStart = (str: string) => {
-      return str.startsWith('#') ? str : '#' + str;
-    };
-
-    if (!isValidUrl(url)) {
-      setErrorMessage('Invalid URL. Please enter a valid URL.');
+    if (!isValidUrl(longUrl)) {
+      setErrorMessage(errorMessages.current.invalidUrl);
       return;
     }
 
     // Check if the URL already has a shortened version
-    const existingUrlObject = indexedUrls.find((urlObject) => urlObject.url === url);
+    const existingUrlObject = indexedUrls.find((urlObject) => urlObject.url === longUrl);
     if (existingUrlObject) {
       // If the URL already exists, use its existing UID (ignore custom UID)
-      setShortenedUrl(urlSuffix + addHashToStart(existingUrlObject.uid));
-      setResultIsShown(true);
-      return;
+      navigateToResult(getUrlSuffix() + addHashToStart(existingUrlObject.uid));
     }
 
     // Validate custom UID if provided
     if (customUid.length) {
       if (!isValidCustomUid(customUid)) {
-        setErrorMessage(
-          'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.'
-        );
+        setErrorMessage(errorMessages.current.invalidCustomUid);
         return;
       }
 
       // Check if custom UID already exists
       const existingUid = indexedUrls.some((urlObject) => urlObject.uid === customUid);
       if (existingUid) {
-        setErrorMessage('Custom UID already exists. Please enter a different one.');
+        setErrorMessage(errorMessages.current.customUidAlreadyExists);
         return;
       }
 
       // Check if UID is too long
       if (customUid.length > parseInt(import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT)) {
-        setErrorMessage(
-          `Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.`
-        );
+        setErrorMessage(errorMessages.current.customUidTooLong);
         return;
       }
     }
 
     // If no existing URL, generate new UID or use custom one
-    const uid = customUid || generateUniqueId();
-    const updatedUrls = [...indexedUrls, { url, uid }];
+    const uid = customUid || generateUniqueId(indexedUrls);
+    const updatedUrls = [...indexedUrls, { url: longUrl, uid }];
 
     // Store the new URL/UID pair
     localforage.setItem(import.meta.env.VITE_FORAGE_KEY, updatedUrls).then(() => {
-      setShortenedUrl(urlSuffix + addHashToStart(uid));
       setIndexedUrls(updatedUrls);
+      navigateToResult(getUrlSuffix() + addHashToStart(uid));
     });
-
-    setResultIsShown(true);
   };
 
   /**
@@ -140,24 +106,7 @@ export default function useShortener() {
    * @param event The event fired from the text input.
    */
   const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.currentTarget.value);
-  };
-
-  /**
-   * Goes back to the homescreen and resets URL text input.
-   */
-  const convertAnother = () => {
-    setResultIsShown(false);
-    setUrl('');
-    setCustomUid('');
-    setErrorMessage('');
-  };
-
-  /**
-   * Toggles whether the dashboard is shown or not.
-   */
-  const toggleShowDashboard = () => {
-    setDashboardIsShown((prev) => !prev);
+    setLongUrl(event.currentTarget.value);
   };
 
   /**
@@ -234,15 +183,10 @@ export default function useShortener() {
   }, [indexedUrls, syncLocalForage]);
 
   return {
-    url,
+    url: longUrl,
     indexedUrls,
-    handleUrlChange,
-    shortenedUrl,
     shortenUrl,
-    resultIsShown,
-    convertAnother,
-    dashboardIsShown,
-    toggleShowDashboard,
+    handleUrlChange,
     deleteUrl,
     customUid,
     handleCustomUidChange,
@@ -250,6 +194,5 @@ export default function useShortener() {
     deleteAllUrls,
     exportUrls,
     importUrls,
-    generateUniqueId,
   };
 }

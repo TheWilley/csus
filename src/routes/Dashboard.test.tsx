@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, test, vi } from 'vitest';
-import Dashboard from './Dashboard';
+import Dashboard from './Dashboard.tsx';
 
 describe('Dashboard tests', () => {
     // Globals variables for testing
