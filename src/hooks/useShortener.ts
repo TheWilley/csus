@@ -103,15 +103,15 @@ export default function useShortener() {
 
   /**
    * Handles URL text input change.
-   * @param event The event fired from the text input.
+   * @param event The event fired from the text input
    */
-  const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleLongUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLongUrl(event.currentTarget.value);
   };
 
   /**
    * Handles custom UID text input change.
-   * @param event The event fired from the text input.
+   * @param event The event fired from the text input
    */
   const handleCustomUidChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCustomUid(event.currentTarget.value.toLowerCase());
@@ -186,7 +186,7 @@ export default function useShortener() {
     url: longUrl,
     indexedUrls,
     shortenUrl,
-    handleUrlChange,
+    handleLongUrlChange,
     deleteUrl,
     customUid,
     handleCustomUidChange,

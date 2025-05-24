@@ -1,15 +1,12 @@
-import {
-  faArrowUpRightFromSquare,
-  faCopy,
-  faLink,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import Label from '../components/Label.tsx';
+import TextInput from '../components/TextInput.tsx';
+import Button from '../components/Button.tsx';
+import LinkHeader from '../components/LinkHeader.tsx';
 
 function Result() {
-  const [copiedText, setCopiedText] = useState('Copy');
+  const [copiedText, setCopiedText] = useState('Copy()');
   const [searchParams] = useSearchParams();
 
   const longUrl = searchParams.get('longUrl');
@@ -20,43 +17,32 @@ function Result() {
     navigator.clipboard.writeText(shortUrl || '').then(() => {
       setCopiedText('Copied!');
       setTimeout(() => {
-        setCopiedText('Copy');
+        setCopiedText('Copy()');
       }, 1400);
     });
   };
 
   if (longUrl && shortUrl) {
     return (
-      <div className='text-center p-3'>
-        <label className='form-control'>
-          <div className='label'>
-            <span className='label-text text-xl'>
-              {' '}
-              <FontAwesomeIcon icon={faLink} /> Long URL:
-            </span>
-          </div>
-          <input type='text' value={longUrl} className='input input-bordered' readOnly />
-        </label>
-        <label className='form-control'>
-          <div className='label'>
-            <span className='label-text text-xl'>
-              {' '}
-              <FontAwesomeIcon icon={faStar} /> Short URL:
-            </span>
-          </div>
-          <input type='text' value={shortUrl} className='input input-bordered' readOnly />
-        </label>
+      <>
+        <LinkHeader
+          links={[
+            { name: '/home', path: '/' },
+            { name: '/dashboard', path: '/dashboard' },
+          ]}
+        />
+
+        <Label text='[ long_url ]' />
+        <TextInput value={longUrl} className='w-full mt-2 mb-5' readOnly />
+
+        <Label text='[ short_url]' />
+        <TextInput value={shortUrl} className={'w-full mt-2 mb-5'} readOnly />
+
         <div className='flex gap-3 mt-3 justify-center'>
-          <a href={shortUrl} target='_blank' className='btn btn-primary btn-outline'>
-            <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-            Visit
-          </a>
-          <button onClick={copyToClipboard} className='btn btn-primary btn-outline'>
-            <FontAwesomeIcon icon={faCopy} />
-            {copiedText}
-          </button>
+          <Button text='Visit()' onClick={() => {}} />
+          <Button text={copiedText} onClick={copyToClipboard} />
         </div>
-      </div>
+      </>
     );
   }
 }

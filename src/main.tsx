@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import Root from './routes/Root';
-import Wrapper from './components/Wrapper';
+import Wrapper from './layout/Wrapper.tsx';
 import { urlIdLoader } from './utils/urlUtils';
 import Dashboard from './routes/Dashboard.tsx';
 import Result from './routes/Result.tsx';

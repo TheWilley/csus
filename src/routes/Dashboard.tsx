@@ -1,96 +1,73 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faDownload,
-  faExternalLink,
-  faTrash,
-  faUpload,
-} from '@fortawesome/free-solid-svg-icons';
 import { useShortenerContext } from '../components/ShortenerContext.tsx';
+import Button from '../components/Button.tsx';
+import TextInput from '../components/TextInput.tsx';
+import LinkHeader from '../components/LinkHeader.tsx';
+import { useRef } from 'react';
 
 function Dashboard() {
   const { indexedUrls, deleteUrl, deleteAllUrls, importUrls, exportUrls } =
     useShortenerContext();
+  const importRef = useRef<HTMLInputElement>(null);
 
-  const handleExternalLink = (uid: string) => {
-    window.open(`#${uid}`, '_blank');
+  const handleImport = () => {
+    importRef.current?.click();
   };
 
   return (
     <>
+      <input
+        ref={importRef}
+        type='file'
+        className='hidden'
+        onChange={importUrls}
+        accept='.json'
+      />
+      <LinkHeader links={[{ name: '/home', path: '/' }]} />
+
       {indexedUrls.length ? (
-        <table className='table' data-testid='dashboard-table'>
+        <table
+          className='w-full text-white border-separate border-spacing-y-2'
+          data-testid='dashboard-table'
+        >
           <thead>
-            <tr>
-              <th>Long URL</th>
-              <th>Short URL ID</th>
+            <tr className='text-left'>
+              <th>Long url</th>
+              <th>Url id</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {indexedUrls.map((item) => (
-              <tr key={item.uid}>
+              <tr key={item.uid} className='bg-white bg-opacity-[5%]'>
                 <td>
-                  <input value={item.url} className='bg-base-200 w-full' readOnly />
+                  <TextInput value={item.url} readOnly className='w-full p-3' />
                 </td>
-                <td className='flex items-center'>
-                  <span className='mr-3'>{item.uid}</span>
-                  <FontAwesomeIcon
-                    icon={faExternalLink}
-                    className='cursor-pointer'
-                    onClick={() => handleExternalLink(item.uid)}
-                  />
+                <td className='p-2'>
+                  <div className='flex items-center'>
+                    <a
+                      className='text-blue-400 hover:underline cursor-pointer'
+                      href={'#' + item.uid}
+                      target='_blank'
+                    >
+                      {item.uid}
+                    </a>
+                  </div>
                 </td>
                 <td>
-                  <button
-                    className='btn btn-sm w-full btn-outline btn-error flex-shrink-0 rounded-md transition duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 hover:!text-white'
-                    onClick={() => deleteUrl(item.uid)}
-                  >
-                    Delete
-                  </button>
+                  <Button text='Delete()' onClick={() => deleteUrl(item.uid)} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p className='p-3 font-bold text-center'> No URLs shortened yet</p>
+        <p className='p-3 font-bold text-center'>No URLs shortened yet</p>
       )}
-      <hr />
-      <div className='flex justify-center mt-5 mb-2'>
-        <div className='grid md:grid-cols-3 gap-3 w-full'>
-          <div className='action-item flex items-center'>
-            <button
-              className='btn w-full btn-error text-white flex-shrink-0 px-4 py-2 rounded-md transition duration-300 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
-              onClick={deleteAllUrls}
-              aria-label='Delete all URLs'
-            >
-              <FontAwesomeIcon icon={faTrash} />
-              Delete All
-            </button>
-          </div>
 
-          <div className='action-item flex items-center'>
-            <button
-              className='btn w-full btn-success text-white flex-shrink-0 px-4 py-2 rounded-md transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
-              onClick={exportUrls}
-              aria-label='Export URLs'
-            >
-              <FontAwesomeIcon icon={faUpload} /> Export
-            </button>
-          </div>
-
-          <div className='action-item flex items-center'>
-            <label className='btn w-full px-4 py-2 rounded-md bg-blue-500 text-white transition duration-300 hover:bg-blue-600 cursor-pointer'>
-              <FontAwesomeIcon icon={faDownload} /> Import
-              <input
-                type='file'
-                className='hidden'
-                onChange={importUrls}
-                accept='.json'
-                aria-label='Import URLs from JSON'
-              />
-            </label>
-          </div>
-        </div>
+      <div className='grid md:grid-cols-3 gap-3 w-full my-5'>
+        <Button text='Clear()' onClick={deleteAllUrls} />
+        <Button text='Export()' onClick={exportUrls} />
+        <Button text='Import()' onClick={handleImport} />
       </div>
     </>
   );

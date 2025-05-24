@@ -1,14 +1,14 @@
 import { Outlet } from 'react-router-dom';
 import { ShortenerProvider } from '../components/ShortenerContext.tsx';
+import csus from '../assets/images/csus.png';
 
 function Layout() {
   return (
     <ShortenerProvider>
-      <div className='mb-2 text-center'>
-        <h1 className='text-5xl'>csus</h1>
-        <p className='text-slate-500'>Client-Side-Url-Shortener</p>
+      <div className='mb-5 text-center text-white w-full'>
+        <img src={csus} alt='csus' className='max-w-[200px] m-auto' />
       </div>
-      <div className='bg-base-200 p-3 rounded'>
+      <div className='bg-white bg-opacity-[5%] max-w-[500px] p-3'>
         <Outlet />
       </div>
     </ShortenerProvider>
