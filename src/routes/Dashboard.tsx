@@ -31,8 +31,8 @@ function Dashboard() {
         >
           <thead>
             <tr className='text-left'>
-              <th>Long url</th>
-              <th>Url id</th>
+              <th>Long URL</th>
+              <th>URL ID</th>
               <th>Action</th>
             </tr>
           </thead>
