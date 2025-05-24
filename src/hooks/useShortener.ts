@@ -16,14 +16,15 @@ export default function useShortener() {
     invalidCustomUid:
       'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.',
     customUidAlreadyExists: 'Custom UID already exists. Please enter a different one.',
-    customUidTooLong:
-      'Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.',
+    customUidTooLong: `Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.`,
   });
   const navigate = useNavigate();
   const [longUrl, setLongUrl] = useState<string>('');
   const [indexedUrls, setIndexedUrls] = useState<UrlObject[]>([]);
   const [customUid, setCustomUid] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [longUrlError, setLongUrlError] = useState(false);
+  const [shortUrlError, setShortUrlError] = useState(false);
 
   const navigateToResult = (shortUrl: string) => {
     const params = new URLSearchParams();
@@ -37,8 +38,13 @@ export default function useShortener() {
    * Shortens a URL.
    */
   const shortenUrl = () => {
+    setLongUrlError(false);
+    setShortUrlError(false);
+    setErrorMessage('');
+
     if (!isValidUrl(longUrl)) {
       setErrorMessage(errorMessages.current.invalidUrl);
+      setLongUrlError(true);
       return;
     }
 
@@ -53,6 +59,7 @@ export default function useShortener() {
     if (customUid.length) {
       if (!isValidCustomUid(customUid)) {
         setErrorMessage(errorMessages.current.invalidCustomUid);
+        setShortUrlError(true);
         return;
       }
 
@@ -60,12 +67,14 @@ export default function useShortener() {
       const existingUid = indexedUrls.some((urlObject) => urlObject.uid === customUid);
       if (existingUid) {
         setErrorMessage(errorMessages.current.customUidAlreadyExists);
+        setShortUrlError(true);
         return;
       }
 
       // Check if UID is too long
       if (customUid.length > parseInt(import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT)) {
         setErrorMessage(errorMessages.current.customUidTooLong);
+        setShortUrlError(true);
         return;
       }
     }
@@ -194,5 +203,7 @@ export default function useShortener() {
     deleteAllUrls,
     exportUrls,
     importUrls,
+    shortUrlError,
+    longUrlError,
   };
 }

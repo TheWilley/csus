@@ -12,6 +12,8 @@ function Home() {
     customUid,
     handleLongUrlChange,
     handleCustomUidChange,
+    longUrlError,
+    shortUrlError,
   } = useShortenerContext();
 
   return (
@@ -24,6 +26,7 @@ function Home() {
           onChange={handleLongUrlChange}
           placeholder={'insert long link here'}
           className='w-full mt-2 mb-5'
+          error={longUrlError}
         />
         <Label text='[ custom_id ]' />
         <div className='flex items-center mt-2 mb-5'>
@@ -38,10 +41,11 @@ function Home() {
             onChange={handleCustomUidChange}
             className='w-full'
             placeholder='insert custom id here'
+            error={shortUrlError}
           />
         </div>
         <div>
-          <p className='text-red-500 mb-5 text-center'> {errorMessage} </p>
+          <p className='text-red-600 mb-5 text-center'> {errorMessage} </p>
         </div>
         <Button onClick={shortenUrl} disabled={url.length === 0} className='w-full '>
           Shorten()
