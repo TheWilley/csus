@@ -17,6 +17,7 @@ export default function useShortener() {
       'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.',
     customUidAlreadyExists: 'Custom UID already exists. Please enter a different one.',
     customUidTooLong: `Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.`,
+    customUidForbidden: 'Custom UID is forbidden.',
   });
   const navigate = useNavigate();
   const [longUrl, setLongUrl] = useState<string>('');
@@ -25,6 +26,7 @@ export default function useShortener() {
   const [errorMessage, setErrorMessage] = useState('');
   const [longUrlError, setLongUrlError] = useState(false);
   const [shortUrlError, setShortUrlError] = useState(false);
+  const invalidIds = ['dashboard', 'result'];
 
   const navigateToResult = (shortUrl: string) => {
     const params = new URLSearchParams();
@@ -57,6 +59,12 @@ export default function useShortener() {
 
     // Validate custom UID if provided
     if (customUid.length) {
+      if (invalidIds.includes(customUid)) {
+        setErrorMessage(errorMessages.current.customUidForbidden);
+        setShortUrlError(true);
+        return;
+      }
+
       if (!isValidCustomUid(customUid)) {
         setErrorMessage(errorMessages.current.invalidCustomUid);
         setShortUrlError(true);
