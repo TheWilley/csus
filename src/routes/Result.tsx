@@ -4,6 +4,7 @@ import Label from '../components/Label.tsx';
 import TextInput from '../components/TextInput.tsx';
 import Button from '../components/Button.tsx';
 import LinkHeader from '../components/LinkHeader.tsx';
+import ctc from '../utils/ctc.ts';
 
 function Result() {
   const [copiedText, setCopiedText] = useState('Copy()');
@@ -21,8 +22,8 @@ function Result() {
     '　          │　　| | |';
 
   // Sets state to "copied" for 2 seconds and then back to "copy"
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shortUrl || '').then(() => {
+  const copy = () => {
+    ctc(shortUrl || '', () => {
       setCopiedText('Copied!');
       setTimeout(() => {
         setCopiedText('Copy()');
@@ -58,7 +59,7 @@ function Result() {
           >
             Visit()
           </Button>
-          <Button onClick={copyToClipboard}>{copiedText}</Button>
+          <Button onClick={copy}>{copiedText}</Button>
         </div>
       </>
     );
