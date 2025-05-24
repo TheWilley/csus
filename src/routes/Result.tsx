@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Label from '../components/Label.tsx';
 import TextInput from '../components/TextInput.tsx';
 import Button from '../components/Button.tsx';
@@ -11,6 +11,14 @@ function Result() {
 
   const longUrl = searchParams.get('longUrl');
   const shortUrl = searchParams.get('shortUrl');
+
+  const sadCat =
+    '　　        　 ／＞　　フ\n' +
+    '　　        　 | 　_　 _ l\n' +
+    ' 　        　 ／` ミ＿xノ\n' +
+    '　           /　　　 　 |\n' +
+    '　        　 /　 ヽ　　 ﾉ\n' +
+    '　          │　　| | |';
 
   // Sets state to "copied" for 2 seconds and then back to "copy"
   const copyToClipboard = () => {
@@ -52,6 +60,17 @@ function Result() {
           </Button>
           <Button onClick={copyToClipboard}>{copiedText}</Button>
         </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <LinkHeader links={[{ name: '/home', path: '/' }]} />
+        <p className='text-center'>"I call it my billion-dollar mistake."</p>
+        <i>- Tony Hoare</i>
+        <br />
+        <br />
+        <pre>{sadCat}</pre>
       </>
     );
   }
