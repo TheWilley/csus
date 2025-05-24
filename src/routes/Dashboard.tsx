@@ -25,41 +25,43 @@ function Dashboard() {
       <LinkHeader links={[{ name: '/home', path: '/' }]} />
 
       {indexedUrls.length ? (
-        <table
-          className='w-full text-white border-separate border-spacing-y-2'
-          data-testid='dashboard-table'
-        >
-          <thead>
-            <tr className='text-left'>
-              <th>Long URL</th>
-              <th>URL ID</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {indexedUrls.map((item) => (
-              <tr key={item.uid} className='bg-white bg-opacity-[5%]'>
-                <td>
-                  <TextInput value={item.url} readOnly className='w-full p-3' />
-                </td>
-                <td className='p-2'>
-                  <div className='flex items-center'>
-                    <a
-                      className='text-blue-400 hover:underline cursor-pointer'
-                      href={'#' + item.uid}
-                      target='_blank'
-                    >
-                      {item.uid}
-                    </a>
-                  </div>
-                </td>
-                <td>
-                  <Button onClick={() => deleteUrl(item.uid)}>Delete()</Button>
-                </td>
+        <div className='max-h-[400px] overflow-y-auto mb-4'>
+          <table
+            className='w-full text-white border-separate border-spacing-y-2'
+            data-testid='dashboard-table'
+          >
+            <thead className='sticky top-0 bg-[#1e1e1e]'>
+              <tr className='text-left'>
+                <th>Long URL</th>
+                <th>URL ID</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {indexedUrls.map((item) => (
+                <tr key={item.uid} className='bg-white bg-opacity-[5%]'>
+                  <td>
+                    <TextInput value={item.url} readOnly className='w-full p-3' />
+                  </td>
+                  <td className='p-2'>
+                    <div className='flex items-center'>
+                      <a
+                        className='text-blue-400 hover:underline cursor-pointer'
+                        href={'#' + item.uid}
+                        target='_blank'
+                      >
+                        {item.uid}
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <Button onClick={() => deleteUrl(item.uid)}>Delete()</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p className='p-3 font-bold text-center'>No URLs shortened yet</p>
       )}
