@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">A client-side Url Shortener built with localForage and React.
+<h4 align="center">A minimalistic, client-side URL shortener
 </h4>
 
 <p align="center">
@@ -19,9 +19,11 @@
   <a href="#license">License</a>
 </p>
 
+<img src="https://github.com/user-attachments/assets/f01a390e-12c5-4b74-b470-38b4f1ef14b9" alt="Screenshot" width=100%>
+
 ## Introduction
 
-csus is a fully client-side URL shortener, eliminating the need for any external server or database. Instead, it leverages IndexedDB, a browser-based storage solution, to store and retrieve data. This means:
+**csus** is a fully client-side URL shortener, eliminating the need for any external server or database. This means:
 
 - All shortened URLs are saved locally in your browser
 - No information is transmitted over the internet or stored on remote servers
