@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
-import Root from './routes/Root';
 import Wrapper from './layout/Wrapper.tsx';
 import { urlIdLoader } from './utils/urlUtils';
 import Dashboard from './routes/Dashboard.tsx';
 import Result from './routes/Result.tsx';
-import Layout from './routes/Layout.tsx';
+import Layout from './layout/Layout.tsx';
+import Home from './routes/Home.tsx';
 
 // Create a browser router with the following routes
 const router = createHashRouter([
@@ -17,7 +17,7 @@ const router = createHashRouter([
     children: [
       {
         index: true,
-        element: <Root />,
+        element: <Home />,
       },
       {
         path: '/dashboard',

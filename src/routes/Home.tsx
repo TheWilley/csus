@@ -4,7 +4,7 @@ import TextInput from '../components/TextInput.tsx';
 import Label from '../components/Label.tsx';
 import LinkHeader from '../components/LinkHeader.tsx';
 
-function Shortener() {
+function Home() {
   const {
     url,
     shortenUrl,
@@ -55,4 +55,4 @@ function Shortener() {
   );
 }
 
-export default Shortener;
+export default Home;

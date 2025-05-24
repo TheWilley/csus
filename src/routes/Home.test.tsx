@@ -1,11 +1,11 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { describe, test, expect } from 'vitest';
-import Root from './Root';
+import Home from './Home';
 
-describe('Root Component', () => {
+describe('Home Component', () => {
   test('renders the title and subtitle', async () => {
     await act(async () => {
-      render(<Root />);
+      render(<Home />);
     });
     expect(screen.queryByText('csus')).toBeTruthy();
     expect(screen.queryByText('Client-Side-Url-Shortener')).toBeTruthy();
@@ -13,14 +13,14 @@ describe('Root Component', () => {
 
   test('renders the Shortener component by default', async () => {
     await act(async () => {
-      render(<Root />);
+      render(<Home />);
     });
     expect(screen.queryByText('Manage your URLs')).toBeTruthy();
   });
 
   test('renders the Result component when entering a link and clicking "Shorten"', async () => {
     await act(async () => {
-      render(<Root />);
+      render(<Home />);
     });
 
     // Enter text into the input field
@@ -41,7 +41,7 @@ describe('Root Component', () => {
 
   test('toggles the dashboard view when the button is clicked', async () => {
     await act(async () => {
-      render(<Root />);
+      render(<Home />);
     });
     const button = screen.getByText('Manage your URLs');
     await act(async () => {
@@ -55,7 +55,7 @@ describe('Root Component', () => {
   test('renders the Footer component when VITE_SHOW_FOOTER is true', async () => {
     import.meta.env.VITE_SHOW_FOOTER = 'true';
     await act(async () => {
-      render(<Root />);
+      render(<Home />);
     });
     expect(screen.queryByText('You can also self-host the app! (GitHub)')).toBeTruthy();
   });
@@ -63,7 +63,7 @@ describe('Root Component', () => {
   test('does not render the Footer component when VITE_SHOW_FOOTER is false', async () => {
     import.meta.env.VITE_SHOW_FOOTER = 'false';
     await act(async () => {
-      render(<Root />);
+      render(<Home />);
     });
     expect(screen.queryByText('You can also self-host the app! (GitHub)')).toBeFalsy();
   });
