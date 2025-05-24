@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { ShortenerProvider } from '../components/ShortenerContext.tsx';
 import csus from '../assets/images/csus.png';
+import Corner from '../components/Corner.tsx';
 
 function Layout() {
   return (
     <ShortenerProvider>
+      <Corner />
       <div className='mb-5 text-center text-white w-full'>
         <img src={csus} alt='csus' className='max-w-[200px] m-auto' />
       </div>
