@@ -54,7 +54,7 @@ function Dashboard() {
                   </div>
                 </td>
                 <td>
-                  <Button text='Delete()' onClick={() => deleteUrl(item.uid)} />
+                  <Button onClick={() => deleteUrl(item.uid)}>Delete()</Button>
                 </td>
               </tr>
             ))}
@@ -65,9 +65,9 @@ function Dashboard() {
       )}
 
       <div className='grid md:grid-cols-3 gap-3 w-full my-5'>
-        <Button text='Clear()' onClick={deleteAllUrls} />
-        <Button text='Export()' onClick={exportUrls} />
-        <Button text='Import()' onClick={handleImport} />
+        <Button onClick={deleteAllUrls}>Clear()</Button>
+        <Button onClick={exportUrls}>Export()</Button>
+        <Button onClick={handleImport}>Import()</Button>
       </div>
     </>
   );

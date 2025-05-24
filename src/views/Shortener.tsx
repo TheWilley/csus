@@ -46,9 +46,10 @@ function Shortener() {
         <Button
           onClick={shortenUrl}
           disabled={url.length === 0}
-          text={'Shorten()'}
           className='w-full bg-green-700'
-        />
+        >
+          Shorten()
+        </Button>
       </div>
     </>
   );

@@ -39,8 +39,8 @@ function Result() {
         <TextInput value={shortUrl} className={'w-full mt-2 mb-5'} readOnly />
 
         <div className='flex gap-3 mt-3 justify-center'>
-          <Button text='Visit()' onClick={() => {}} />
-          <Button text={copiedText} onClick={copyToClipboard} />
+          <Button onClick={() => {}}>Visit()</Button>
+          <Button onClick={copyToClipboard}>{copiedText}</Button>
         </div>
       </>
     );
