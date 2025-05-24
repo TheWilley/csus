@@ -43,11 +43,7 @@ function Home() {
         <div>
           <p className='text-red-500 mb-5 text-center'> {errorMessage} </p>
         </div>
-        <Button
-          onClick={shortenUrl}
-          disabled={url.length === 0}
-          className='w-full bg-green-700'
-        >
+        <Button onClick={shortenUrl} disabled={url.length === 0} className='w-full '>
           Shorten()
         </Button>
       </div>

@@ -1,8 +1,8 @@
 import '../assets/fonts/JetBrainsMono-Regular.ttf';
-import { InputHTMLAttributes } from 'react';
+import { LabelHTMLAttributes } from 'react';
 import { cn } from '../utils/cn.ts';
 
-type Props = { text: string } & InputHTMLAttributes<HTMLLabelElement>;
+type Props = { text: string } & LabelHTMLAttributes<HTMLLabelElement>;
 
 function Label({ ...props }: Props) {
   return (
