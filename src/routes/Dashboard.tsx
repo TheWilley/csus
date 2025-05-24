@@ -66,7 +66,7 @@ function Dashboard() {
         <p className='p-3 font-bold text-center'>no urls shortened</p>
       )}
 
-      <div className='grid md:grid-cols-3 gap-3 w-full my-5'>
+      <div className='grid md:grid-cols-3 gap-3 w-full mt-5'>
         <Button onClick={deleteAllUrls}>Clear()</Button>
         <Button onClick={exportUrls}>Export()</Button>
         <Button onClick={handleImport}>Import()</Button>
