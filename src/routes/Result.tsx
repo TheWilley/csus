@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Label from '../components/Label.tsx';
 import TextInput from '../components/TextInput.tsx';
 import Button from '../components/Button.tsx';
@@ -22,6 +22,10 @@ function Result() {
     });
   };
 
+  const visit = () => {
+    window.open(longUrl || '', '_blank');
+  };
+
   if (longUrl && shortUrl) {
     return (
       <>
@@ -39,7 +43,13 @@ function Result() {
         <TextInput value={shortUrl} className={'w-full mt-2 mb-5'} readOnly />
 
         <div className='flex gap-3 mt-3 justify-center'>
-          <Button onClick={() => {}}>Visit()</Button>
+          <Button
+            onClick={() => {
+              visit();
+            }}
+          >
+            Visit()
+          </Button>
           <Button onClick={copyToClipboard}>{copiedText}</Button>
         </div>
       </>
