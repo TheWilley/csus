@@ -19,8 +19,6 @@
   <a href="#license">License</a>
 </p>
 
-<img src="https://github.com/user-attachments/assets/f01a390e-12c5-4b74-b470-38b4f1ef14b9" alt="Screenshot" width=100%>
-
 ## Introduction
 
 **csus** is a fully client-side URL shortener, eliminating the need for any external server or database. This means:
