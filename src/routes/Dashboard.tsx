@@ -63,7 +63,7 @@ function Dashboard() {
           </table>
         </div>
       ) : (
-        <p className='p-3 font-bold text-center'>No URLs shortened yet</p>
+        <p className='p-3 font-bold text-center'>no urls shortened</p>
       )}
 
       <div className='grid md:grid-cols-3 gap-3 w-full my-5'>
