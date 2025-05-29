@@ -9,6 +9,12 @@ import {
   isValidUrl,
 } from '../utils/urlUtils';
 import { useNavigate } from 'react-router-dom';
+import {
+  CHAR_LIMIT,
+  SAVEDATA_FILENAME,
+  SAVEDATA_ID,
+  SHORTENED_URL_PAIRS_KEY,
+} from '../global/globals.ts';
 
 export default function useShortener() {
   const errorMessages = useRef({
@@ -16,7 +22,7 @@ export default function useShortener() {
     invalidCustomUid:
       'Invalid custom UID. Only alphanumeric characters, hyphens, and underscores are allowed.',
     customUidAlreadyExists: 'Custom UID already exists. Please enter a different one.',
-    customUidTooLong: `Custom UID is too long. Please enter a UID of ${import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT} characters or less.`,
+    customUidTooLong: `Custom UID is too long. Please enter a UID of ${CHAR_LIMIT} characters or less.`,
     customUidForbidden: 'Custom UID is forbidden.',
   });
   const navigate = useNavigate();
@@ -26,6 +32,7 @@ export default function useShortener() {
   const [errorMessage, setErrorMessage] = useState('');
   const [longUrlError, setLongUrlError] = useState(false);
   const [shortUrlError, setShortUrlError] = useState(false);
+
   const invalidIds = ['dashboard', 'result'];
 
   const navigateToResult = (shortUrl: string) => {
@@ -80,7 +87,7 @@ export default function useShortener() {
       }
 
       // Check if UID is too long
-      if (customUid.length > parseInt(import.meta.env.VITE_CUSTOM_UID_CHAR_LIMIT)) {
+      if (customUid.length > CHAR_LIMIT) {
         setErrorMessage(errorMessages.current.customUidTooLong);
         setShortUrlError(true);
         return;
@@ -92,7 +99,7 @@ export default function useShortener() {
     const updatedUrls = [...indexedUrls, { url: longUrl, uid }];
 
     // Store the new URL/UID pair
-    localforage.setItem(import.meta.env.VITE_FORAGE_KEY, updatedUrls).then(() => {
+    localforage.setItem(SHORTENED_URL_PAIRS_KEY, updatedUrls).then(() => {
       setIndexedUrls(updatedUrls);
       navigateToResult(getUrlSuffix() + addHashToStart(uid));
     });
@@ -115,7 +122,7 @@ export default function useShortener() {
    * **This method should not be called directly. Set indexedUrls instead to trigger a sync.**
    */
   const syncLocalForage = useCallback(() => {
-    localforage.setItem(import.meta.env.VITE_FORAGE_KEY, [...indexedUrls]);
+    localforage.setItem(SHORTENED_URL_PAIRS_KEY, [...indexedUrls]);
   }, [indexedUrls]);
 
   /**
@@ -149,7 +156,7 @@ export default function useShortener() {
    */
   const exportUrls = () => {
     const saveData: SaveData = {
-      id: 'csus-urls',
+      id: SAVEDATA_ID,
       data: indexedUrls,
     };
     const data = JSON.stringify(saveData);
@@ -157,7 +164,7 @@ export default function useShortener() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'csus-urls.json';
+    a.download = SAVEDATA_FILENAME;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -174,7 +181,7 @@ export default function useShortener() {
         const data = e.target?.result;
         if (typeof data === 'string') {
           const parsedData = JSON.parse(data) as SaveData;
-          if (parsedData.id !== 'csus-urls') {
+          if (parsedData.id !== SAVEDATA_ID) {
             return;
           } else {
             setIndexedUrls(parsedData.data);
@@ -187,7 +194,7 @@ export default function useShortener() {
 
   // Initially syncs indexedUrls with LocalForage
   useEffect(() => {
-    localforage.getItem(import.meta.env.VITE_FORAGE_KEY).then((result) => {
+    localforage.getItem(SHORTENED_URL_PAIRS_KEY).then((result) => {
       if (result) {
         setIndexedUrls(result as UrlObject[]);
       }

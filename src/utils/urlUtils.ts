@@ -40,6 +40,7 @@ export async function urlIdLoader({ params }: LoaderFunctionArgs) {
   if (urlId) {
     const result = await findInForage(urlId, 'uid');
     if (result) {
+      // Add to statistic here
       return redirect(result.url);
     }
   }
