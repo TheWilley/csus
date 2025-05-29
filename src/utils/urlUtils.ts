@@ -18,15 +18,13 @@ function findInForage(
   type: 'url' | 'uid'
 ): Promise<UrlObject | undefined> {
   return new Promise((resolve) => {
-    localforage
-      .getItem<{ url: string; uid: string }[]>(import.meta.env.VITE_FORAGE_KEY)
-      .then((result) => {
-        const found = result?.find((object) => {
-          if (type === 'url') return object.url === query;
-          else return object.uid === query;
-        });
-        resolve(found);
+    localforage.getItem<UrlObject[]>(SHORTENED_URL_PAIRS_KEY).then((result) => {
+      const found = result?.find((object) => {
+        if (type === 'url') return object.url === query;
+        else return object.uid === query;
       });
+      resolve(found);
+    });
   });
 }
 
