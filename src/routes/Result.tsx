@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Label from '../components/Label.tsx';
 import TextInput from '../components/TextInput.tsx';
 import Button from '../components/Button.tsx';
 import LinkHeader from '../components/LinkHeader.tsx';
 import ctc from '../utils/ctc.ts';
+import { TimedButton } from '../components/TimedButton.tsx';
 
 function Result() {
-  const [copiedText, setCopiedText] = useState('Copy()');
   const [searchParams] = useSearchParams();
 
   const longUrl = searchParams.get('longUrl');
@@ -20,16 +19,6 @@ function Result() {
     '　           /　　　 　 |\n' +
     '　        　 /　 ヽ　　 ﾉ\n' +
     '　          │　　| | |';
-
-  // Sets state to "copied" for 2 seconds and then back to "copy"
-  const copy = () => {
-    ctc(shortUrl || '', () => {
-      setCopiedText('Copied!');
-      setTimeout(() => {
-        setCopiedText('Copy()');
-      }, 1400);
-    });
-  };
 
   const visit = () => {
     window.open(longUrl || '', '_blank');
@@ -59,7 +48,12 @@ function Result() {
           >
             Visit()
           </Button>
-          <Button onClick={copy}>{copiedText}</Button>
+          <TimedButton
+            time={1400}
+            text='Copy()'
+            timedText='Copied!'
+            callback={() => ctc(shortUrl)}
+          />
         </div>
       </>
     );
