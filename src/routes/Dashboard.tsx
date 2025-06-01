@@ -3,6 +3,9 @@ import Button from '../components/Button.tsx';
 import TextInput from '../components/TextInput.tsx';
 import LinkHeader from '../components/LinkHeader.tsx';
 import { useRef } from 'react';
+import { TimedButton } from '../components/TimedButton.tsx';
+import ctc from '../utils/ctc.ts';
+import { addHashToStart, getUrlSuffix } from '../utils/urlUtils.ts';
 
 function Dashboard() {
   const { indexedUrls, deleteUrl, deleteAllUrls, importUrls, exportUrls } =
@@ -34,7 +37,8 @@ function Dashboard() {
               <tr className='text-left'>
                 <th>Long URL</th>
                 <th>URL ID</th>
-                <th>Action</th>
+                <th />
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -56,6 +60,14 @@ function Dashboard() {
                   </td>
                   <td>
                     <Button onClick={() => deleteUrl(item.uid)}>Delete()</Button>
+                  </td>
+                  <td>
+                    <TimedButton
+                      time={1400}
+                      text='Copy()'
+                      timedText='Copied!'
+                      callback={() => ctc(getUrlSuffix() + addHashToStart(item.uid))}
+                    />
                   </td>
                 </tr>
               ))}
