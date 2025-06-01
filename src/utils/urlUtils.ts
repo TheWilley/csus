@@ -3,6 +3,7 @@ import { UrlObject } from '../global/types';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 import ShortUniqueId from 'short-unique-id';
 import validUrl from 'valid-url';
+import { SHORTENED_URL_PAIRS_KEY } from '../global/globals.ts';
 
 export function getUrlSuffix() {
   return window.location.href.split('/csus/')[0] + '/csus/';
