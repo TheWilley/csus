@@ -62,6 +62,7 @@ export default function useShortener() {
     if (existingUrlObject) {
       // If the URL already exists, use its existing UID (ignore custom UID)
       navigateToResult(getUrlSuffix() + addHashToStart(existingUrlObject.uid));
+      return;
     }
 
     // Validate custom UID if provided
