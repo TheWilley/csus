@@ -1,7 +1,3 @@
-export default function ctc(text: string, callback?: () => void) {
-  navigator.clipboard.writeText(text).then(() => {
-    if (callback) {
-      callback();
-    }
-  });
+export default async function ctc(text: string) {
+  await navigator.clipboard.writeText(text);
 }
