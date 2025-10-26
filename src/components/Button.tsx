@@ -1,4 +1,3 @@
-import '../assets/fonts/JetBrainsMono-Regular.ttf';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '../utils/cn.ts';
 

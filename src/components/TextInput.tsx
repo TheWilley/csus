@@ -1,4 +1,3 @@
-import '../assets/fonts/JetBrainsMono-Regular.ttf';
 import { InputHTMLAttributes } from 'react';
 import { cn } from '../utils/cn.ts';
 
